@@ -261,7 +261,7 @@ docker-compose up -d --build
 ### Option B: Quick One-Liner (from local)
 
 ```bash
-ssh temco-prod "cd /apps/temco-srs && git pull origin main && docker-compose up -d --build"
+ssh temco-prod "cd /apps/temco-srs && git pull origin main && docker-compose down && docker-compose up -d --build"
 ```
 
 ---
@@ -453,6 +453,7 @@ TTL: Auto
 | CSS/JS returning 404 | Cloudflare cached the 404 from before SSL was configured. | Purged Cloudflare cache. |
 | PowerShell mangling Nginx variables | `$host`, `$remote_addr` etc. interpreted as PS variables when using heredoc over SSH. | Copy existing config + `sed` to replace values instead. |
 | Config in wrong directory | Initially placed in `/etc/nginx/sites-available/`. Server loads from `/etc/nginx/conf.d/`. | Moved config to `/etc/nginx/conf.d/temcosrs.temcobank.com.conf`. |
+| `ContainerConfig` KeyError on redeploy | `docker-compose` v1.29.2 bug when recreating containers with newer Docker engine. | Use `docker-compose down` then `docker-compose up -d --build` instead of just `up --build`. |
 
 ---
 
@@ -476,6 +477,7 @@ TTL: Auto
 │  UPDATE:                                                    │
 │    ssh temco-prod "cd /apps/temco-srs &&                    │
 │      git pull origin main &&                                │
+│      docker-compose down &&                                 │
 │      docker-compose up -d --build"                          │
 │                                                             │
 │  STATUS:                                                    │
