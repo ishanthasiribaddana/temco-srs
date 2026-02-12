@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEMCO Banking Application — SRS v1.0</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav" id="topNav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo.svg" alt="TEMCO Bank" class="logo-img">
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link active">Overview</a>
+                <a href="architecture.html" class="nav-link">Architecture</a>
+                <a href="features.html" class="nav-link">Services</a>
+                <a href="database.html" class="nav-link">Database</a>
+                <a href="api.html" class="nav-link">API</a>
+                <a href="timeline.html" class="nav-link">Timeline</a>
+                <a href="runsheet.html" class="nav-link">Runsheet</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge">SRS v1.0 &bull; February 2026</div>
+            <h1 class="hero-title">TEMCO Banking<br>Application</h1>
+            <p class="hero-subtitle">A comprehensive banking platform providing lending, deposit, transaction, joint venture, and investment services — built on enterprise-grade Java EE architecture with modern React frontends.</p>
+            <p class="hero-meta">Developed by <strong>Temco Bank Web Services</strong></p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="stat-number">40</span>
+                    <span class="stat-label">Banking Services</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="stat-number">300</span>
+                    <span class="stat-label">Requirements</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="stat-number">259</span>
+                    <span class="stat-label">Database Tables</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Service Tiers</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Service Tiers Overview -->
+    <section class="section" id="tiers">
+        <div class="container">
+            <h2 class="section-title">Three-Tier Service Architecture</h2>
+            <p class="section-desc">TEMCO Banking Application is organized into three service tiers, prioritizing core banking operations</p>
+            <div class="tier-cards">
+                <div class="tier-card tier-1">
+                    <div class="tier-header">
+                        <div class="tier-icon"><i class="fas fa-landmark"></i></div>
+                        <div class="tier-badge">Tier 1 — Core</div>
+                    </div>
+                    <h3>Lending &amp; Deposits</h3>
+                    <p>12 lending products + 8 deposit products forming the foundation of TEMCO's banking operations</p>
+                    <div class="tier-stats">
+                        <span><strong>20</strong> Services</span>
+                        <span><strong>141</strong> Requirements</span>
+                    </div>
+                    <ul class="tier-list">
+                        <li>Personal, Student, Mortgage, Vehicle Loans</li>
+                        <li>Business, Microfinance, Gold Loans</li>
+                        <li>Overdraft, Leasing, Factoring, Pawning</li>
+                        <li>Savings, FD, RD, Current Accounts</li>
+                        <li>Children's, Senior Citizen, Corporate, Call Deposits</li>
+                    </ul>
+                </div>
+                <div class="tier-card tier-2">
+                    <div class="tier-header">
+                        <div class="tier-icon"><i class="fas fa-exchange-alt"></i></div>
+                        <div class="tier-badge">Tier 2 — Transactions</div>
+                    </div>
+                    <h3>Transaction Services</h3>
+                    <p>9 transaction and payment services enabling fund movement and payment processing</p>
+                    <div class="tier-stats">
+                        <span><strong>9</strong> Services</span>
+                        <span><strong>58</strong> Requirements</span>
+                    </div>
+                    <ul class="tier-list">
+                        <li>Internal Fund Transfers</li>
+                        <li>CEFT/SLIPS Interbank Transfers</li>
+                        <li>Standing Orders &amp; Direct Debits</li>
+                        <li>Payment Gateway &amp; Bill Payments</li>
+                        <li>QR Payments, Cheques, Demand Drafts</li>
+                    </ul>
+                </div>
+                <div class="tier-card tier-3">
+                    <div class="tier-header">
+                        <div class="tier-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="tier-badge">Tier 3 — Specialized</div>
+                    </div>
+                    <h3>JV &amp; Investments</h3>
+                    <p>5 joint venture services + 6 investment services for advanced financial operations</p>
+                    <div class="tier-stats">
+                        <span><strong>11</strong> Services</span>
+                        <span><strong>67</strong> Requirements</span>
+                    </div>
+                    <ul class="tier-list">
+                        <li>JV Account Management &amp; P/L Sharing</li>
+                        <li>JV Loans &amp; Escrow Facility</li>
+                        <li>Stock Market &amp; Money Market</li>
+                        <li>Government Securities &amp; Unit Trusts</li>
+                        <li>Portfolio Management &amp; Fixed Income</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What the System Does -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">What the System Does</h2>
+            <p class="section-desc">40 banking services across the complete financial lifecycle</p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                    <h4>Lending Products</h4>
+                    <p>12 loan types including personal, student, mortgage, vehicle, business, microfinance, gold, overdraft, leasing, factoring, FD-backed, and pawning</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-piggy-bank"></i></div>
+                    <h4>Deposit Products</h4>
+                    <p>8 deposit types: savings, fixed deposits, recurring deposits, current accounts, children's, senior citizen, corporate, and call deposits</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-money-bill-transfer"></i></div>
+                    <h4>Fund Transfers</h4>
+                    <p>Internal transfers, CEFT/SLIPS interbank, standing orders, and direct debits with real-time processing</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-credit-card"></i></div>
+                    <h4>Payment Services</h4>
+                    <p>Payment gateway, bill payments, QR code payments, cheque management, and demand drafts</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-handshake"></i></div>
+                    <h4>Joint Ventures</h4>
+                    <p>Multi-party JV accounts, P&L sharing, JV loans, escrow facility, and consolidated reporting</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-pie"></i></div>
+                    <h4>Investment Services</h4>
+                    <p>Stock market, money market, government securities, unit trusts, portfolio management, and fixed income</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
+                    <h4>Security &amp; Compliance</h4>
+                    <p>CBSL compliance, AML/KYC, PCI-DSS, JWT auth, RBAC, OTP via WhatsApp, full audit trail</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <h4>Finance &amp; Accounting</h4>
+                    <p>Chart of accounts, journal entries, voucher management, bank reconciliation, and financial reporting</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who Uses the System -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Who Uses the System</h2>
+            <p class="section-desc">9 user roles across 3 web portals with role-based access control</p>
+            <div class="role-grid">
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-user-shield"></i></div>
+                    <h4>Super Admin</h4>
+                    <p>Full system access, configuration, user management</p>
+                    <span class="role-portal">Admin Portal</span>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-building-columns"></i></div>
+                    <h4>Branch Manager</h4>
+                    <p>Branch-level operations and approvals</p>
+                    <span class="role-portal">Admin Portal</span>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-file-signature"></i></div>
+                    <h4>Loan Officer</h4>
+                    <p>Loan processing, document verification</p>
+                    <span class="role-portal">Admin Portal</span>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-cash-register"></i></div>
+                    <h4>Teller</h4>
+                    <p>Transaction processing, deposits, withdrawals</p>
+                    <span class="role-portal">Admin Portal</span>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-calculator"></i></div>
+                    <h4>Accountant</h4>
+                    <p>Journal entries, reconciliation, reporting</p>
+                    <span class="role-portal">Finance App</span>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-chart-line"></i></div>
+                    <h4>Investment Officer</h4>
+                    <p>Stock/money market operations</p>
+                    <span class="role-portal">Admin Portal</span>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-user"></i></div>
+                    <h4>Member</h4>
+                    <p>Self-service banking, loan applications</p>
+                    <span class="role-portal portal-customer">Customer Portal</span>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-users"></i></div>
+                    <h4>JV Partner</h4>
+                    <p>Joint venture account access</p>
+                    <span class="role-portal portal-customer">Customer Portal</span>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon"><i class="fas fa-magnifying-glass"></i></div>
+                    <h4>Auditor</h4>
+                    <p>Read-only access to all records</p>
+                    <span class="role-portal">Admin Portal</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Components -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">System Components</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <div class="component-port">:3000</div>
+                    <h4>Admin Portal</h4>
+                    <p>Back-office operations, loan processing, user management, branch operations, accounting</p>
+                    <div class="component-tech">React 18 &bull; TypeScript &bull; Tailwind</div>
+                </div>
+                <div class="component-card">
+                    <div class="component-port">:3001</div>
+                    <h4>Finance App</h4>
+                    <p>Financial management, reporting, reconciliation, voucher management, journal entries</p>
+                    <div class="component-tech">React 18 &bull; TypeScript &bull; Tailwind</div>
+                </div>
+                <div class="component-card">
+                    <div class="component-port">:3002</div>
+                    <h4>Customer Portal</h4>
+                    <p>Member self-service, loan applications, account management, fund transfers, payments</p>
+                    <div class="component-tech">React 18 &bull; TypeScript &bull; Tailwind</div>
+                </div>
+                <div class="component-card">
+                    <div class="component-port">:8080</div>
+                    <h4>Core Backend</h4>
+                    <p>Java EE application server — authentication, business logic, REST APIs, JPA/Hibernate ORM</p>
+                    <div class="component-tech">WildFly 31 &bull; Jakarta EE 10 &bull; JDK 17</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Technology Stack -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Core Technology Stack</h2>
+            <div class="stack-grid">
+                <div class="stack-group">
+                    <h3><i class="fas fa-server"></i> Backend</h3>
+                    <div class="stack-items">
+                        <div class="stack-item"><span class="stack-name">Java</span><span class="stack-ver">17</span></div>
+                        <div class="stack-item"><span class="stack-name">Jakarta EE</span><span class="stack-ver">10</span></div>
+                        <div class="stack-item"><span class="stack-name">WildFly</span><span class="stack-ver">31.0.1</span></div>
+                        <div class="stack-item"><span class="stack-name">Hibernate</span><span class="stack-ver">6.2.x</span></div>
+                        <div class="stack-item"><span class="stack-name">JAX-RS</span><span class="stack-ver">built-in</span></div>
+                        <div class="stack-item"><span class="stack-name">JWT (jjwt)</span><span class="stack-ver">0.11.5</span></div>
+                        <div class="stack-item"><span class="stack-name">JasperReports</span><span class="stack-ver">6.20.6</span></div>
+                        <div class="stack-item"><span class="stack-name">Redis (Jedis)</span><span class="stack-ver">5.0.2</span></div>
+                    </div>
+                </div>
+                <div class="stack-group">
+                    <h3><i class="fas fa-palette"></i> Frontend</h3>
+                    <div class="stack-items">
+                        <div class="stack-item"><span class="stack-name">React</span><span class="stack-ver">18.2</span></div>
+                        <div class="stack-item"><span class="stack-name">TypeScript</span><span class="stack-ver">5.3</span></div>
+                        <div class="stack-item"><span class="stack-name">Vite</span><span class="stack-ver">5.0</span></div>
+                        <div class="stack-item"><span class="stack-name">Tailwind CSS</span><span class="stack-ver">3.4</span></div>
+                        <div class="stack-item"><span class="stack-name">Zustand</span><span class="stack-ver">4.4</span></div>
+                        <div class="stack-item"><span class="stack-name">React Query</span><span class="stack-ver">5.8</span></div>
+                        <div class="stack-item"><span class="stack-name">Recharts</span><span class="stack-ver">2.10</span></div>
+                        <div class="stack-item"><span class="stack-name">Axios</span><span class="stack-ver">1.6</span></div>
+                    </div>
+                </div>
+                <div class="stack-group">
+                    <h3><i class="fas fa-database"></i> Infrastructure</h3>
+                    <div class="stack-items">
+                        <div class="stack-item"><span class="stack-name">MariaDB</span><span class="stack-ver">10.6</span></div>
+                        <div class="stack-item"><span class="stack-name">Redis</span><span class="stack-ver">7</span></div>
+                        <div class="stack-item"><span class="stack-name">Elasticsearch</span><span class="stack-ver">8.11</span></div>
+                        <div class="stack-item"><span class="stack-name">Docker</span><span class="stack-ver">Compose</span></div>
+                        <div class="stack-item"><span class="stack-name">Nginx</span><span class="stack-ver">SSL/443</span></div>
+                        <div class="stack-item"><span class="stack-name">Ubuntu</span><span class="stack-ver">22.04</span></div>
+                        <div class="stack-item"><span class="stack-name">WhatsApp API</span><span class="stack-ver">Meta Cloud</span></div>
+                        <div class="stack-item"><span class="stack-name">Node.js</span><span class="stack-ver">24.x</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explore Full Spec -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Explore the Full Specification</h2>
+            <div class="explore-grid">
+                <a href="architecture.html" class="explore-card">
+                    <i class="fas fa-sitemap"></i>
+                    <h4>Architecture</h4>
+                    <p>System architecture, deployment topology, authentication flow</p>
+                </a>
+                <a href="features.html" class="explore-card">
+                    <i class="fas fa-list-check"></i>
+                    <h4>Services &amp; Features</h4>
+                    <p>All 40 banking services with 300 functional requirements</p>
+                </a>
+                <a href="database.html" class="explore-card">
+                    <i class="fas fa-database"></i>
+                    <h4>Database Design</h4>
+                    <p>175 existing + 84 new tables across 11 entity groups</p>
+                </a>
+                <a href="api.html" class="explore-card">
+                    <i class="fas fa-plug"></i>
+                    <h4>API Endpoints</h4>
+                    <p>REST API specification with authentication and data models</p>
+                </a>
+                <a href="timeline.html" class="explore-card">
+                    <i class="fas fa-calendar-days"></i>
+                    <h4>Timeline &amp; Risks</h4>
+                    <p>36-week delivery plan across 6 phases with risk assessment</p>
+                </a>
+                <a href="runsheet.html" class="explore-card">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h4>Runsheet</h4>
+                    <p>Week-by-week execution plan with deliverables and milestones</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="logo.svg" alt="TEMCO Bank" class="footer-logo">
+                    <p>TEMCO Banking Application — Comprehensive banking platform for lending, deposits, transactions, joint ventures, and investments.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Overview</a>
+                    <a href="architecture.html">Architecture</a>
+                    <a href="features.html">Services</a>
+                    <a href="database.html">Database</a>
+                    <a href="api.html">API</a>
+                    <a href="timeline.html">Timeline</a>
+                    <a href="runsheet.html">Runsheet</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Developed by <strong>Temco Bank Web Services</strong> &bull; SRS v1.0 &bull; February 2026</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

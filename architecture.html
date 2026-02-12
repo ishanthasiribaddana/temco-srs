@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture — TEMCO Banking App SRS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <nav class="top-nav" id="topNav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="logo.svg" alt="TEMCO Bank" class="logo-img"></a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link">Overview</a>
+                <a href="architecture.html" class="nav-link active">Architecture</a>
+                <a href="features.html" class="nav-link">Services</a>
+                <a href="database.html" class="nav-link">Database</a>
+                <a href="api.html" class="nav-link">API</a>
+                <a href="timeline.html" class="nav-link">Timeline</a>
+                <a href="runsheet.html" class="nav-link">Runsheet</a>
+            </div>
+            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <div class="page-hero">
+        <h1>System Architecture</h1>
+        <p>Multi-portal monolithic architecture with Java EE backend, React frontends, and MariaDB database</p>
+    </div>
+
+    <!-- High-Level Architecture -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">High-Level Architecture</h2>
+            <p class="section-desc">Monolithic backend deployed on WildFly 31 with three React frontend portals</p>
+            <div class="arch-diagram">
+<pre>
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           CLIENT LAYER                                  │
+│                                                                         │
+│  ┌─────────────┐  ┌─────────────┐  ┌───────────────┐                  │
+│  │  AdminApp   │  │ FinanceApp  │  │Customer Portal│                  │
+│  │  React 18.2 │  │ React 18.2  │  │  React 18.2   │                  │
+│  │  :3000      │  │  :3001      │  │  :3002        │                  │
+│  └──────┬──────┘  └──────┬──────┘  └───────┬───────┘                  │
+└─────────┼────────────────┼─────────────────┼──────────────────────────┘
+          │                │                 │
+          ▼                ▼                 ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    REVERSE PROXY (Nginx — port 443)                     │
+└─────────────────────────────┬───────────────────────────────────────────┘
+                              │
+┌─────────────────────────────▼───────────────────────────────────────────┐
+│              MONOLITHIC APPLICATION SERVER (WildFly 31 + JDK 17)       │
+│              Deployed as WAR on Jakarta EE 10 Container                │
+│                                                                         │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │                    JAX-RS REST API Layer                        │    │
+│  │              (MicroProfile OpenAPI 3.1 documented)             │    │
+│  └─────────────────────────────┬───────────────────────────────────┘    │
+│                                │                                        │
+│  ┌─────────────────────────────▼───────────────────────────────────┐    │
+│  │                    EJB Business Logic Layer                     │    │
+│  │                                                                 │    │
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌───────────────────┐ │    │
+│  │  │ Auth &   │ │ Loan     │ │ Deposit  │ │ Voucher / Invoice │ │    │
+│  │  │ User Mgmt│ │ Mgmt     │ │ Mgmt     │ │ Module            │ │    │
+│  │  ├──────────┤ ├──────────┤ ├──────────┤ ├───────────────────┤ │    │
+│  │  │ Member   │ │ Payment  │ │ JV &     │ │ Investment        │ │    │
+│  │  │ Mgmt     │ │ Mgmt     │ │ Escrow   │ │ Module            │ │    │
+│  │  ├──────────┤ ├──────────┤ ├──────────┤ ├───────────────────┤ │    │
+│  │  │ Branch   │ │ Fund     │ │ Report   │ │ Notification      │ │    │
+│  │  │ Mgmt     │ │ Transfer │ │ Engine   │ │ (Email/WhatsApp)  │ │    │
+│  │  └──────────┘ └──────────┘ └──────────┘ └───────────────────┘ │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+│                                                                         │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │              JPA / Hibernate 6.2.x ORM Layer                    │    │
+│  └─────────────────────────────┬───────────────────────────────────┘    │
+│                                │                                        │
+│  ┌──────────────┐  ┌──────────▼──────┐  ┌──────────────────────────┐   │
+│  │ Redis Cache  │  │ MariaDB 10.6    │  │ JasperReports 6.20.6    │   │
+│  │ (Jedis 5.0.2)│  │ (JDBC 3.x)     │  │ (PDF/Excel Generation)  │   │
+│  └──────────────┘  └─────────────────┘  └──────────────────────────┘   │
+│                                                                         │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │  Jakarta Mail 2.0.1  │  Meta WhatsApp Cloud API  │  Node.js   │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────────────────┘
+</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portal Architecture -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Multi-Portal Architecture</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <div class="component-port">:3000 → :8080</div>
+                    <h4>Admin Portal</h4>
+                    <p>Back-office operations: loan processing, user management, branch operations, accounting, investment management</p>
+                    <div class="component-tech">React 18 • TypeScript • Vite 5 • Tailwind 3.4</div>
+                </div>
+                <div class="component-card">
+                    <div class="component-port">:3001 → :8080 / :8087</div>
+                    <h4>Finance App</h4>
+                    <p>Financial management: journal entries, vouchers, reconciliation, reporting, chart of accounts</p>
+                    <div class="component-tech">React 18 • TypeScript • Vite 5 • Tailwind 3.4</div>
+                </div>
+                <div class="component-card">
+                    <div class="component-port">:3002 → :8080</div>
+                    <h4>Customer Portal</h4>
+                    <p>Member self-service: loan applications, account management, fund transfers, payments, statements</p>
+                    <div class="component-tech">React 18 • TypeScript • Vite 5 • Tailwind 3.4</div>
+                </div>
+                <div class="component-card">
+                    <div class="component-port">:8080 (WildFly)</div>
+                    <h4>Core Backend</h4>
+                    <p>Java EE monolith: temco-loan-system.war, temco-bank.war, temco-api.war — JWT auth, EJB business logic, JPA ORM</p>
+                    <div class="component-tech">WildFly 31 • Jakarta EE 10 • JDK 17</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vite Proxy Configuration -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Vite Proxy Configuration</h2>
+            <p class="section-desc">Development proxy routing for each frontend application</p>
+            <table class="data-table">
+                <thead>
+                    <tr><th>App</th><th>Proxy Rule</th><th>Target</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>AdminApp</strong> (:3000)</td><td><code>/api/v1/*</code> → <code>/temco-loan-system/api/v1/customer/*</code></td><td>localhost:8080</td></tr>
+                    <tr><td><strong>FinanceApp</strong> (:3001)</td><td><code>/api/v1/auth/*</code> → <code>/temco-loan-system/api/v1/customer/*</code></td><td>localhost:8080</td></tr>
+                    <tr><td><strong>FinanceApp</strong> (:3001)</td><td><code>/api/*</code> → <code>/temco-api/api/*</code></td><td>localhost:8087</td></tr>
+                    <tr><td><strong>Customer Portal</strong> (:3002)</td><td><code>/api/*</code> → <code>/temco-loan-system/*</code></td><td>localhost:8080</td></tr>
+                    <tr><td><strong>Customer Portal</strong> (:3002)</td><td><code>/api/students</code></td><td>localhost:8086</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Authentication Flow -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Authentication Flow</h2>
+            <p class="section-desc">JWT-based SSO across all three portals via WildFly backend</p>
+            <div class="arch-diagram">
+<pre>
+Client → POST /api/v1/auth/login (username, password)
+    │
+    ▼
+WildFly (temco-loan-system.war)
+    │ → Validate credentials (BCrypt)
+    │ → Check account lock (count_attempt >= max_login_attempt)
+    │ → Generate JWT token
+    │
+    ▼
+Response: {
+    success: true,
+    token: "eyJhbGciOi...",
+    user: {
+        id, username, email, fullName,
+        nic, roleId, roleName
+    },
+    expiresAt: "2026-02-12T..."
+}
+    │
+    ▼
+Client stores token in Zustand store
+All subsequent requests: Authorization: Bearer &lt;token&gt;
+</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack Detail -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Full Technology Stack</h2>
+            <div class="stack-grid">
+                <div class="stack-group">
+                    <h3><i class="fas fa-server"></i> Backend</h3>
+                    <div class="stack-items">
+                        <div class="stack-item"><span class="stack-name">Java</span><span class="stack-ver">17 LTS</span></div>
+                        <div class="stack-item"><span class="stack-name">Jakarta EE</span><span class="stack-ver">10.0.0</span></div>
+                        <div class="stack-item"><span class="stack-name">WildFly</span><span class="stack-ver">31.0.1</span></div>
+                        <div class="stack-item"><span class="stack-name">Hibernate ORM</span><span class="stack-ver">6.2.x</span></div>
+                        <div class="stack-item"><span class="stack-name">JAX-RS</span><span class="stack-ver">built-in</span></div>
+                        <div class="stack-item"><span class="stack-name">EJB</span><span class="stack-ver">built-in</span></div>
+                        <div class="stack-item"><span class="stack-name">JWT (jjwt)</span><span class="stack-ver">0.11.5</span></div>
+                        <div class="stack-item"><span class="stack-name">BCrypt (jbcrypt)</span><span class="stack-ver">0.4</span></div>
+                        <div class="stack-item"><span class="stack-name">Jackson</span><span class="stack-ver">2.15.x</span></div>
+                        <div class="stack-item"><span class="stack-name">JasperReports</span><span class="stack-ver">6.20.6</span></div>
+                        <div class="stack-item"><span class="stack-name">Redis (Jedis)</span><span class="stack-ver">5.0.2</span></div>
+                        <div class="stack-item"><span class="stack-name">Jakarta Mail</span><span class="stack-ver">2.0.1</span></div>
+                        <div class="stack-item"><span class="stack-name">OpenAPI</span><span class="stack-ver">3.1</span></div>
+                        <div class="stack-item"><span class="stack-name">Maven</span><span class="stack-ver">build</span></div>
+                        <div class="stack-item"><span class="stack-name">JUnit 5</span><span class="stack-ver">5.10</span></div>
+                        <div class="stack-item"><span class="stack-name">Mockito</span><span class="stack-ver">5.7</span></div>
+                    </div>
+                </div>
+                <div class="stack-group">
+                    <h3><i class="fas fa-palette"></i> Frontend</h3>
+                    <div class="stack-items">
+                        <div class="stack-item"><span class="stack-name">React</span><span class="stack-ver">18.2</span></div>
+                        <div class="stack-item"><span class="stack-name">TypeScript</span><span class="stack-ver">5.3</span></div>
+                        <div class="stack-item"><span class="stack-name">Vite</span><span class="stack-ver">5.0</span></div>
+                        <div class="stack-item"><span class="stack-name">React Router</span><span class="stack-ver">6.21</span></div>
+                        <div class="stack-item"><span class="stack-name">Axios</span><span class="stack-ver">1.6</span></div>
+                        <div class="stack-item"><span class="stack-name">Zustand</span><span class="stack-ver">4.4</span></div>
+                        <div class="stack-item"><span class="stack-name">Tailwind CSS</span><span class="stack-ver">3.4</span></div>
+                        <div class="stack-item"><span class="stack-name">Lucide React</span><span class="stack-ver">0.300</span></div>
+                        <div class="stack-item"><span class="stack-name">Recharts</span><span class="stack-ver">2.10</span></div>
+                        <div class="stack-item"><span class="stack-name">date-fns</span><span class="stack-ver">3.0</span></div>
+                        <div class="stack-item"><span class="stack-name">React Hook Form</span><span class="stack-ver">7.49</span></div>
+                        <div class="stack-item"><span class="stack-name">React Query</span><span class="stack-ver">5.8</span></div>
+                        <div class="stack-item"><span class="stack-name">React Hot Toast</span><span class="stack-ver">2.4</span></div>
+                    </div>
+                </div>
+                <div class="stack-group">
+                    <h3><i class="fas fa-cloud"></i> Infrastructure</h3>
+                    <div class="stack-items">
+                        <div class="stack-item"><span class="stack-name">MariaDB</span><span class="stack-ver">10.6</span></div>
+                        <div class="stack-item"><span class="stack-name">Redis</span><span class="stack-ver">7 Alpine</span></div>
+                        <div class="stack-item"><span class="stack-name">Elasticsearch</span><span class="stack-ver">8.11</span></div>
+                        <div class="stack-item"><span class="stack-name">Docker</span><span class="stack-ver">Compose</span></div>
+                        <div class="stack-item"><span class="stack-name">Nginx</span><span class="stack-ver">SSL/443</span></div>
+                        <div class="stack-item"><span class="stack-name">Ubuntu</span><span class="stack-ver">22.04</span></div>
+                        <div class="stack-item"><span class="stack-name">Node.js</span><span class="stack-ver">24.x</span></div>
+                        <div class="stack-item"><span class="stack-name">WhatsApp API</span><span class="stack-ver">Meta Cloud</span></div>
+                        <div class="stack-item"><span class="stack-name">Contabo VPS</span><span class="stack-ver">Production</span></div>
+                        <div class="stack-item"><span class="stack-name">SSH</span><span class="stack-ver">Ed25519</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Production Deployment -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Production Deployment</h2>
+            <p class="section-desc">Docker-based deployment on Contabo VPS with Nginx reverse proxy</p>
+            <div class="arch-diagram">
+<pre>
+┌─────────────────────────────────────────────────────────────┐
+│              PRODUCTION SERVER                                │
+│              109.123.227.166 (Contabo VPS, Ubuntu 22.04)    │
+│              SSH: root@temco-prod (Ed25519 key)             │
+│                                                              │
+│  ┌────────────────────────────────────────────────────────┐ │
+│  │  Host Nginx (port 443 — SSL Termination)               │ │
+│  │  ├── /admin/*     → localhost:8089 (admin-frontend)    │ │
+│  │  ├── /finance/*   → localhost:8091 (finance-frontend)  │ │
+│  │  ├── /portal/*    → localhost:8092 (my-frontend)       │ │
+│  │  ├── /api/*       → localhost:8088 (admin-wildfly)     │ │
+│  │  └── /finance-api/*→ localhost:8087 (finance-api)      │ │
+│  └────────────────────────────────────────────────────────┘ │
+│                                                              │
+│  ┌──── Docker Containers ────────────────────────────────┐  │
+│  │  ┌──────────────┐  ┌──────────────┐                   │  │
+│  │  │admin-wildfly │  │ finance-api  │                   │  │
+│  │  │WildFly 31    │  │ WildFly 31   │                   │  │
+│  │  │:8088→8080    │  │ :8087→8080   │                   │  │
+│  │  └──────────────┘  └──────────────┘                   │  │
+│  │  ┌──────────────┐  ┌──────────────┐  ┌─────────────┐ │  │
+│  │  │admin-frontend│  │finance-front │  │my-frontend  │ │  │
+│  │  │Nginx:Alpine  │  │Nginx:Alpine  │  │Nginx:Alpine │ │  │
+│  │  │:8089→80      │  │:8091→80      │  │:8092→80     │ │  │
+│  │  └──────────────┘  └──────────────┘  └─────────────┘ │  │
+│  └────────────────────────────────────────────────────────┘  │
+│                                                              │
+│  ┌──── Host Services ────────────────────────────────────┐  │
+│  │  ┌──────────────┐  ┌──────────────┐  ┌─────────────┐ │  │
+│  │  │ MariaDB 10.6 │  │ Redis 7      │  │Elasticsearch│ │  │
+│  │  │ :3306        │  │ :6379        │  │ 8.11 :9200  │ │  │
+│  │  └──────────────┘  └──────────────┘  └─────────────┘ │  │
+│  └────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- WAR Deployments -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">WildFly WAR Deployments</h2>
+            <table class="data-table">
+                <thead>
+                    <tr><th>WAR File</th><th>Purpose</th><th>Port</th><th>Key Modules</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>temco-loan-system.war</code></td><td>Core banking & SSO authentication</td><td>8080</td><td>Auth, User, Loan, Member, Branch</td></tr>
+                    <tr><td><code>temco-bank.war</code></td><td>Banking operations</td><td>8080</td><td>Deposits, Transactions, JV, Investments</td></tr>
+                    <tr><td><code>temco-bank-system-project.war</code></td><td>System management</td><td>8080</td><td>Config, Permissions, Audit</td></tr>
+                    <tr><td><code>temco-api.war</code></td><td>Finance API</td><td>8087</td><td>Vouchers, Journal Entries, Reports</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="logo.svg" alt="TEMCO Bank" class="footer-logo">
+                    <p>TEMCO Banking Application — SRS v1.0</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Overview</a>
+                    <a href="architecture.html">Architecture</a>
+                    <a href="features.html">Services</a>
+                    <a href="database.html">Database</a>
+                    <a href="api.html">API</a>
+                    <a href="timeline.html">Timeline</a>
+                    <a href="runsheet.html">Runsheet</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Developed by <strong>Temco Bank Web Services</strong> &bull; SRS v1.0 &bull; February 2026</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

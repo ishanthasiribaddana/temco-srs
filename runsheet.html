@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Runsheet — TEMCO Banking App SRS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <nav class="top-nav" id="topNav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="logo.svg" alt="TEMCO Bank" class="logo-img"></a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link">Overview</a>
+                <a href="architecture.html" class="nav-link">Architecture</a>
+                <a href="features.html" class="nav-link">Services</a>
+                <a href="database.html" class="nav-link">Database</a>
+                <a href="api.html" class="nav-link">API</a>
+                <a href="timeline.html" class="nav-link">Timeline</a>
+                <a href="runsheet.html" class="nav-link active">Runsheet</a>
+            </div>
+            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <div class="page-hero">
+        <h1>Project Runsheet</h1>
+        <p>Week-by-week execution plan — 36 weeks across 6 phases with tasks, owners, deliverables &amp; milestones</p>
+        <div style="margin-top:12px;font-size:13px;color:rgba(255,215,0,0.7);">Temco Bank Web Services &bull; TEMCO Banking App v1.0</div>
+    </div>
+
+    <!-- Gantt Overview -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">36-Week Gantt Overview</h2>
+            <p class="section-desc">Click a phase to jump to its detailed week-by-week breakdown</p>
+            <div class="gantt-container">
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray-500);margin-bottom:4px;">
+                    <span>Week 1</span><span>Week 8</span><span>Week 14</span><span>Week 22</span><span>Week 26</span><span>Week 32</span><span>Week 36</span>
+                </div>
+                <div class="gantt-bar">
+                    <a href="#rs-p1" class="gantt-phase gantt-p1" style="text-decoration:none;color:white;">
+                        <span>P1: Foundation &amp; Lending</span>
+                        <span class="phase-label">Wk 1–8</span>
+                    </a>
+                    <a href="#rs-p2" class="gantt-phase gantt-p2" style="text-decoration:none;color:white;">
+                        <span>P2: Deposits</span>
+                        <span class="phase-label">Wk 9–14</span>
+                    </a>
+                    <a href="#rs-p3" class="gantt-phase gantt-p3" style="text-decoration:none;color:white;">
+                        <span>P3: Transactions</span>
+                        <span class="phase-label">Wk 15–22</span>
+                    </a>
+                    <a href="#rs-p4" class="gantt-phase gantt-p4" style="text-decoration:none;color:white;">
+                        <span>P4: JV &amp; Escrow</span>
+                        <span class="phase-label">Wk 23–26</span>
+                    </a>
+                    <a href="#rs-p5" class="gantt-phase gantt-p5" style="text-decoration:none;color:white;">
+                        <span>P5: Investments</span>
+                        <span class="phase-label">Wk 27–32</span>
+                    </a>
+                    <a href="#rs-p6" class="gantt-phase gantt-p6" style="text-decoration:none;color:white;">
+                        <span>P6: Testing</span>
+                        <span class="phase-label">Wk 33–36</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Allocation -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Team &amp; Resource Allocation</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="role-icon" style="margin:0 auto 8px;width:44px;height:44px;font-size:16px;"><i class="fas fa-server"></i></div>
+                    <h4>Backend Engineers</h4>
+                    <p>Java 17 / Jakarta EE / WildFly</p>
+                </div>
+                <div class="team-card">
+                    <div class="role-icon" style="margin:0 auto 8px;width:44px;height:44px;font-size:16px;"><i class="fas fa-palette"></i></div>
+                    <h4>Frontend Engineers</h4>
+                    <p>React 18 / Vite / Tailwind</p>
+                </div>
+                <div class="team-card">
+                    <div class="role-icon" style="margin:0 auto 8px;width:44px;height:44px;font-size:16px;"><i class="fas fa-database"></i></div>
+                    <h4>DevOps / DBA</h4>
+                    <p>Docker / Nginx / MariaDB</p>
+                </div>
+                <div class="team-card">
+                    <div class="role-icon" style="margin:0 auto 8px;width:44px;height:44px;font-size:16px;"><i class="fas fa-vial"></i></div>
+                    <h4>QA Engineer</h4>
+                    <p>JUnit / Selenium / JMeter</p>
+                </div>
+                <div class="team-card">
+                    <div class="role-icon" style="margin:0 auto 8px;width:44px;height:44px;font-size:16px;"><i class="fas fa-calculator"></i></div>
+                    <h4>Finance SME</h4>
+                    <p>Banking domain / CBSL compliance</p>
+                </div>
+                <div class="team-card">
+                    <div class="role-icon" style="margin:0 auto 8px;width:44px;height:44px;font-size:16px;"><i class="fas fa-clipboard-check"></i></div>
+                    <h4>Project Manager</h4>
+                    <p>Scrum / Stakeholder Mgmt</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 1 Detail -->
+    <section class="section" id="rs-p1">
+        <div class="container">
+            <h2 class="section-title" style="color:var(--blue);">Phase 1: Foundation &amp; Core Lending</h2>
+            <p class="section-desc">Project setup, enhanced lending module, specialized loan products — 8 weeks</p>
+            <table class="data-table">
+                <thead><tr><th>Week</th><th>Backend Tasks</th><th>Frontend Tasks</th><th>Deliverables</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Wk 1–2</strong></td><td>Flyway migration setup, JPA entities for specialized lending (property_valuation, vehicle_details, gold_item, lease_asset, micro_group, overdraft_facility), EJB service stubs</td><td>Admin Portal: Enhanced loan application form with multi-step wizard, loan type selector</td><td>19 new table schemas, migration scripts</td></tr>
+                    <tr><td><strong>Wk 3–4</strong></td><td>Personal &amp; Student loan EJBs (enhance existing), Mortgage &amp; Vehicle loan EJBs (new), LTV calculation logic, guarantor workflow improvements</td><td>Admin Portal: Mortgage/Vehicle loan screens with property/vehicle detail capture, LTV display</td><td>4 loan types operational</td></tr>
+                    <tr><td><strong>Wk 5–6</strong></td><td>Business, Microfinance, Gold loan EJBs, Gold price integration, Vault storage tracking, Group lending logic, Pawn ticket generation</td><td>Admin Portal: Gold loan with pawn ticket, Microfinance group management, Business loan with org profile</td><td>7 loan types operational</td></tr>
+                    <tr><td><strong>Wk 7–8</strong></td><td>Overdraft, Leasing, Factoring, FD-backed loan, Pawning EJBs, EMI calculator API, Installment schedule generation, Penalty engine</td><td>Customer Portal: Loan application wizard, EMI calculator, Loan status tracking, Payment history</td><td>All 12 loan types operational, Phase 1 demo</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Phase 2 Detail -->
+    <section class="section section-alt" id="rs-p2">
+        <div class="container">
+            <h2 class="section-title" style="color:#3B82F6;">Phase 2: Deposit Products</h2>
+            <p class="section-desc">Savings, FD, RD, Current Accounts, interest calculation engine — 6 weeks</p>
+            <table class="data-table">
+                <thead><tr><th>Week</th><th>Backend Tasks</th><th>Frontend Tasks</th><th>Deliverables</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Wk 9–10</strong></td><td>JPA entities for deposit tables (fixed_deposit, fd_interest_rate_slab, fd_certificate, recurring_deposit, etc.), Savings account EJBs, Daily balance interest calculation engine</td><td>Admin Portal: Account opening form with KYC, Interest rate configuration screen</td><td>10 new tables created, savings module</td></tr>
+                    <tr><td><strong>Wk 11–12</strong></td><td>Fixed Deposit EJBs (create, renew, premature withdrawal, WHT deduction), FD certificate generation (JasperReports), Recurring Deposit EJBs (auto-debit scheduler, compound interest)</td><td>Admin Portal: FD management (create, view, renew), RD management, FD certificate PDF</td><td>FD &amp; RD modules operational</td></tr>
+                    <tr><td><strong>Wk 13–14</strong></td><td>Current Account EJBs, Cheque book issuance, Children's/Senior/Corporate/Call deposit logic, Account dormancy rules, Statement generation (JasperReports)</td><td>Customer Portal: Account dashboard, FD/RD views, Statement download (PDF), Balance inquiry</td><td>All 8 deposit products operational, Phase 2 demo</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Phase 3 Detail -->
+    <section class="section" id="rs-p3">
+        <div class="container">
+            <h2 class="section-title" style="color:#8B5CF6;">Phase 3: Transaction Services</h2>
+            <p class="section-desc">Fund transfers, payments, cheques, QR — 8 weeks</p>
+            <table class="data-table">
+                <thead><tr><th>Week</th><th>Backend Tasks</th><th>Frontend Tasks</th><th>Deliverables</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Wk 15–16</strong></td><td>Internal fund transfer EJBs (real-time, scheduled, recurring), Balance validation with overdraft, Journal entry auto-creation, Beneficiary management</td><td>Customer Portal: Transfer wizard (own accounts, other TEMCO accounts), Beneficiary list, Transfer history</td><td>Internal transfers operational</td></tr>
+                    <tr><td><strong>Wk 17–18</strong></td><td>CEFT/SLIPS integration layer, SWIFT code validation, Standing order scheduler (cron-based), Direct debit mandate management, Execution log tracking</td><td>Customer Portal: Interbank transfer form, Standing order setup, Direct debit mandate view</td><td>Interbank transfers, standing orders</td></tr>
+                    <tr><td><strong>Wk 19–20</strong></td><td>Payment gateway EJBs (merchant onboarding, API key generation, payment processing, webhooks, refunds), Bill payment EJBs (biller directory, payment processing)</td><td>Admin Portal: Merchant management, Payment dashboard. Customer Portal: Bill payment UI, Payment history</td><td>Payment gateway &amp; bill payments</td></tr>
+                    <tr><td><strong>Wk 21–22</strong></td><td>QR code generation &amp; payment processing, Cheque management (issuance, clearing, returns, stop-cheque), Demand draft EJBs, Transaction notifications (WhatsApp/email)</td><td>Customer Portal: QR scanner/payment, Cheque book request. Admin Portal: Cheque clearing dashboard, DD issuance</td><td>All 9 transaction services, Phase 3 demo</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Phase 4 Detail -->
+    <section class="section section-alt" id="rs-p4">
+        <div class="container">
+            <h2 class="section-title" style="color:var(--magenta);">Phase 4: Joint Ventures &amp; Escrow</h2>
+            <p class="section-desc">Multi-party accounts, P&amp;L sharing, escrow facility — 4 weeks</p>
+            <table class="data-table">
+                <thead><tr><th>Week</th><th>Backend Tasks</th><th>Frontend Tasks</th><th>Deliverables</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Wk 23–24</strong></td><td>JV account EJBs (creation, partner management, signatory rules), P&L calculation engine, P&L distribution logic (ownership-based), JV loan facility, JV reporting (JasperReports)</td><td>Admin Portal: JV creation wizard, Partner management, P&L distribution screen, JV reports</td><td>JV account management, P&L sharing</td></tr>
+                    <tr><td><strong>Wk 25–26</strong></td><td>Escrow account EJBs (creation, condition tracking, release workflow, dispute resolution), Multi-party approval engine, JV compliance reporting, JV financial statements</td><td>Customer Portal: JV partner dashboard, Escrow status tracking. Admin Portal: Escrow management, Dispute resolution UI</td><td>All 5 JV services operational, Phase 4 demo</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Phase 5 Detail -->
+    <section class="section" id="rs-p5">
+        <div class="container">
+            <h2 class="section-title" style="color:#F59E0B;">Phase 5: Investment Services</h2>
+            <p class="section-desc">Stock market, money market, bonds, unit trusts, portfolio management — 6 weeks</p>
+            <table class="data-table">
+                <thead><tr><th>Week</th><th>Backend Tasks</th><th>Frontend Tasks</th><th>Deliverables</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Wk 27–28</strong></td><td>Investment account EJBs, Security master management, Stock transaction EJBs (buy/sell), Portfolio holding tracking, Dividend recording, Mark-to-market valuation</td><td>Admin Portal: Security master CRUD, Stock trading screen, Portfolio dashboard (Recharts)</td><td>Stock market module operational</td></tr>
+                    <tr><td><strong>Wk 29–30</strong></td><td>Money market EJBs (T-bills, repos, commercial paper), Government bond EJBs (coupon tracking, secondary market), Yield-to-maturity &amp; duration calculations, Bond coupon scheduler</td><td>Admin Portal: Money market dashboard, Bond management, Maturity ladder report</td><td>Money market &amp; government securities</td></tr>
+                    <tr><td><strong>Wk 31–32</strong></td><td>Unit trust EJBs (NAV calculation, subscriptions, redemptions, SIP), Portfolio management EJBs (mandates, allocation, performance, fees), Corporate bond &amp; credit rating tracking</td><td>Admin Portal: Unit trust management, Portfolio performance reports. Customer Portal: Investment overview, Portfolio summary</td><td>All 6 investment services, Phase 5 demo</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Phase 6 Detail -->
+    <section class="section section-alt" id="rs-p6">
+        <div class="container">
+            <h2 class="section-title" style="color:#10B981;">Phase 6: Testing &amp; Launch</h2>
+            <p class="section-desc">Comprehensive testing, security audit, production deployment — 4 weeks</p>
+            <table class="data-table">
+                <thead><tr><th>Week</th><th>Backend Tasks</th><th>Frontend Tasks</th><th>Deliverables</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Wk 33–34</strong></td><td>JUnit 5 + Mockito test suites (80% coverage target), Integration tests for all 40 services, JMeter performance testing (500 concurrent users), OWASP security audit, Interest calculation validation</td><td>UAT with branch staff and members, Cross-browser testing (Chrome, Firefox, Safari, Edge), Accessibility audit (WCAG 2.1 AA), Bug fixes from UAT feedback</td><td>Test reports, security audit report</td></tr>
+                    <tr><td><strong>Wk 35–36</strong></td><td>Production deployment (Docker + Nginx), Database migration to production (Flyway), SSL certificate setup, Monitoring &amp; alerting (health checks), Backup &amp; disaster recovery testing</td><td>User training materials, Video tutorials for each role, Go-live communication, Post-launch support handoff, Documentation finalization</td><td>Production go-live, training materials, support SLA</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Runsheet Summary -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Runsheet Summary</h2>
+            <div class="summary-bar">
+                <div class="summary-stat"><div class="stat-num">36</div><div class="stat-lbl">Weeks Total</div></div>
+                <div class="summary-stat"><div class="stat-num">6</div><div class="stat-lbl">Phases</div></div>
+                <div class="summary-stat"><div class="stat-num">40</div><div class="stat-lbl">Services Delivered</div></div>
+                <div class="summary-stat"><div class="stat-num">84</div><div class="stat-lbl">New Tables</div></div>
+                <div class="summary-stat"><div class="stat-num">300</div><div class="stat-lbl">Requirements</div></div>
+                <div class="summary-stat"><div class="stat-num">80%</div><div class="stat-lbl">Test Coverage</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pre-Launch Checklist -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Pre-Launch Checklist</h2>
+            <div class="checklist-grid">
+                <div class="checklist-card">
+                    <h3><i class="fas fa-code" style="color:var(--blue);margin-right:8px;"></i> Technical</h3>
+                    <div class="checklist-item"><i class="far fa-square"></i> All 84 new database tables created &amp; indexed</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> All API endpoints tested &amp; documented (OpenAPI 3.1)</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> JUnit 5 test coverage ≥ 80%</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> JMeter load test passed (500 concurrent users)</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> OWASP security audit passed</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Redis cache configured &amp; tested</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> JasperReports templates validated (statements, certificates)</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Docker Compose production config ready</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> SSL/TLS 1.3 configured on Nginx</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Database backup &amp; recovery tested</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Flyway migrations verified on staging</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Interest calculation engine validated against manual</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> WhatsApp OTP notifications working</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Elasticsearch indexing configured</div>
+                </div>
+                <div class="checklist-card">
+                    <h3><i class="fas fa-briefcase" style="color:var(--magenta);margin-right:8px;"></i> Business</h3>
+                    <div class="checklist-item"><i class="far fa-square"></i> UAT signed off by TEMCO Bank stakeholders</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> User training completed (all 9 roles)</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Training materials &amp; video tutorials ready</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> CBSL compliance review completed</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> AML/KYC procedures documented</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Interest rate schedules configured</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Chart of accounts finalized</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Branch data migrated</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Support SLA agreement signed</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Go-live communication sent to all branches</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Rollback plan documented &amp; tested</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Post-launch support team assigned</div>
+                    <div class="checklist-item"><i class="far fa-square"></i> Monitoring &amp; alerting configured</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section">
+        <div class="container text-center">
+            <h2 class="section-title">36 Weeks to Production</h2>
+            <p class="section-desc">From foundation to go-live — a structured, milestone-driven delivery plan for the complete TEMCO Banking Application.</p>
+            <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                <a href="timeline.html" class="btn btn-primary"><i class="fas fa-calendar-days"></i> View Timeline &amp; Risks</a>
+                <a href="index.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Overview</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="logo.svg" alt="TEMCO Bank" class="footer-logo">
+                    <p>TEMCO Banking Application — Comprehensive banking platform for lending, deposits, transactions, joint ventures, and investments.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Overview</a><a href="architecture.html">Architecture</a><a href="features.html">Services</a>
+                    <a href="database.html">Database</a><a href="api.html">API</a><a href="timeline.html">Timeline</a><a href="runsheet.html">Runsheet</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Developed by <strong>Temco Bank Web Services</strong> &bull; SRS v1.0 &bull; February 2026</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

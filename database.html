@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database — TEMCO Banking App SRS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <nav class="top-nav" id="topNav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="logo.svg" alt="TEMCO Bank" class="logo-img"></a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link">Overview</a>
+                <a href="architecture.html" class="nav-link">Architecture</a>
+                <a href="features.html" class="nav-link">Services</a>
+                <a href="database.html" class="nav-link active">Database</a>
+                <a href="api.html" class="nav-link">API</a>
+                <a href="timeline.html" class="nav-link">Timeline</a>
+                <a href="runsheet.html" class="nav-link">Runsheet</a>
+            </div>
+            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <div class="page-hero">
+        <h1>Database Design</h1>
+        <p>175 existing + 84 new tables across 11 entity groups in MariaDB 10.6</p>
+    </div>
+
+    <!-- Summary -->
+    <section class="section">
+        <div class="container">
+            <div class="summary-bar">
+                <div class="summary-stat"><div class="stat-num">175</div><div class="stat-lbl">Existing Tables</div></div>
+                <div class="summary-stat"><div class="stat-num">84</div><div class="stat-lbl">New Tables</div></div>
+                <div class="summary-stat"><div class="stat-num">259</div><div class="stat-lbl">Total After Build</div></div>
+                <div class="summary-stat"><div class="stat-num">11</div><div class="stat-lbl">Entity Groups</div></div>
+                <div class="summary-stat"><div class="stat-num">2</div><div class="stat-lbl">Database Schemas</div></div>
+            </div>
+
+            <table class="data-table mb-48">
+                <thead><tr><th>Schema</th><th>Type</th><th>Engine</th><th>Purpose</th></tr></thead>
+                <tbody>
+                    <tr><td><code>temco_system</code></td><td>Primary (R/W)</td><td>MariaDB 10.6</td><td>All banking operations — 175 existing tables</td></tr>
+                    <tr><td><code>ijts_system</code></td><td>Read-only Slave</td><td>MariaDB 10.6</td><td>External master replica — student data source</td></tr>
+                    <tr><td><code>admin_callingDB</code></td><td>External</td><td>MariaDB 10.6</td><td>CRM / Calling system</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Existing Entity Groups -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Existing Entity Groups</h2>
+            <p class="section-desc">175 tables currently in <code>temco_system</code> organized into functional groups</p>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-user-shield"></i> Group A: User &amp; Authentication</h3><span class="db-count">15 tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag">user_login</span><span class="db-tag">user_role</span><span class="db-tag">user_role_has_system_interface</span>
+                    <span class="db-tag">user_role_has_permission</span><span class="db-tag">user_login_has_role</span><span class="db-tag">user_login_has_system_interface</span>
+                    <span class="db-tag">user_login_group</span><span class="db-tag">user_role_management</span><span class="db-tag">user_type</span>
+                    <span class="db-tag">permission</span><span class="db-tag">login_session</span><span class="db-tag">com_login_attempt</span>
+                    <span class="db-tag">com_session_token</span><span class="db-tag">password_reset_token</span><span class="db-tag">otp_tokens</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-users"></i> Group B: Member &amp; Profile</h3><span class="db-count">18 tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag">general_user_profile</span><span class="db-tag">member</span><span class="db-tag">member_bank_accounts</span>
+                    <span class="db-tag">member_documents</span><span class="db-tag">member_has_member</span><span class="db-tag">member_organizations_history</span>
+                    <span class="db-tag">membership_level</span><span class="db-tag">membership_level_has_share_certificate</span><span class="db-tag">member_category</span>
+                    <span class="db-tag">member_has_category</span><span class="db-tag">mobile_no</span><span class="db-tag">nominess</span>
+                    <span class="db-tag">gender</span><span class="db-tag">education_level</span><span class="db-tag">profeession</span>
+                    <span class="db-tag">relationship</span><span class="db-tag">registration_type</span><span class="db-tag">spot_member</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-building"></i> Group C: Organization &amp; Branch</h3><span class="db-count">16 tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag">general_organization_profile</span><span class="db-tag">gop_has_member</span><span class="db-tag">organization_branches</span>
+                    <span class="db-tag">organization_type</span><span class="db-tag">organization_sub_types</span><span class="db-tag">org_branchers</span>
+                    <span class="db-tag">org_category</span><span class="db-tag">org_category_manager</span><span class="db-tag">org_departments</span>
+                    <span class="db-tag">org_chat_of_account</span><span class="db-tag">branch_manager</span><span class="db-tag">branch_level</span>
+                    <span class="db-tag">business_information</span><span class="db-tag">business_sector</span><span class="db-tag">gross_anual_turnover</span>
+                    <span class="db-tag">employee</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-hand-holding-usd"></i> Group D: Loan Management</h3><span class="db-count">27 tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag">loan</span><span class="db-tag">loan_manager</span><span class="db-tag">loan_type</span>
+                    <span class="db-tag">loan_term</span><span class="db-tag">loan_duration</span><span class="db-tag">loan_status</span>
+                    <span class="db-tag">loan_status_manager</span><span class="db-tag">loan_offer</span><span class="db-tag">offer_manager</span>
+                    <span class="db-tag">loan_interest_rate</span><span class="db-tag">interest_manager</span><span class="db-tag">loan_installement_plan</span>
+                    <span class="db-tag">loan_payment_history</span><span class="db-tag">loan_applicant_gurantor</span><span class="db-tag">loan_applicant_has_branch</span>
+                    <span class="db-tag">loan_customer</span><span class="db-tag">loan_doc_comment</span><span class="db-tag">loan_document_status_manager</span>
+                    <span class="db-tag">loan_documents_scheduler</span><span class="db-tag">gurantor_manager</span><span class="db-tag">gurantor_salary_info</span>
+                    <span class="db-tag">guarantor_documents</span><span class="db-tag">gurantor_count</span><span class="db-tag">penalty</span>
+                    <span class="db-tag">approval_level</span><span class="db-tag">approval_status</span><span class="db-tag">repayment_period</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-graduation-cap"></i> Group E: Student Loan &amp; Eligibility</h3><span class="db-count">6 tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag">materialized_student_loan_eligible_student_table</span><span class="db-tag">scholarship_catergory</span>
+                    <span class="db-tag">scholarship_manager</span><span class="db-tag">intake</span><span class="db-tag">intake_manager</span>
+                    <span class="db-tag">package_manager</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-calculator"></i> Group F: Finance &amp; Accounting</h3><span class="db-count">16 tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag">fin_chart_of_account</span><span class="db-tag">fin_account_category</span><span class="db-tag">fin_journal_entry</span>
+                    <span class="db-tag">fin_journal_entry_line</span><span class="db-tag">fin_journal_entry_manager</span><span class="db-tag">fin_voucher</span>
+                    <span class="db-tag">fin_voucher_item</span><span class="db-tag">fin_voucher_item_manager</span><span class="db-tag">fin_voucher_approval</span>
+                    <span class="db-tag">fin_partner</span><span class="db-tag">fin_partner_has_type</span><span class="db-tag">fin_partner_type</span>
+                    <span class="db-tag">fin_fiscal_year</span><span class="db-tag">fin_fiscal_period</span><span class="db-tag">fin_revenue_center</span>
+                    <span class="db-tag">fin_bank_reconciliation</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-file-invoice-dollar"></i> Group G: Voucher &amp; Payment</h3><span class="db-count">14 tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag">voucher</span><span class="db-tag">voucher_item</span><span class="db-tag">voucher_type</span>
+                    <span class="db-tag">voucher_status</span><span class="db-tag">voucher_approval_manager</span><span class="db-tag">voucher_attachment</span>
+                    <span class="db-tag">transaction_type</span><span class="db-tag">credit_or_debit</span><span class="db-tag">pay_order_settlement_guide</span>
+                    <span class="db-tag">pay_order_settlement_statement</span><span class="db-tag">pay_order_settlment_voucher_manager</span>
+                    <span class="db-tag">pay_sheet</span><span class="db-tag">general_journal_entry</span><span class="db-tag">general_journal_entry_manager</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-file-alt"></i> Group H: Document Management</h3><span class="db-count">14 tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag">universal_user_document</span><span class="db-tag">universal_org_documents_manager</span>
+                    <span class="db-tag">document_verification</span><span class="db-tag">document_data_verification</span>
+                    <span class="db-tag">document_creator</span><span class="db-tag">document_fields_manager</span>
+                    <span class="db-tag">document_image_path</span><span class="db-tag">document_inactive</span>
+                    <span class="db-tag">document_items</span><span class="db-tag">documents_submission_status</span>
+                    <span class="db-tag">master_documents</span><span class="db-tag">created_document</span>
+                    <span class="db-tag">submitted_user_document</span><span class="db-tag">uploaded_document_file_path</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-list"></i> Group I: Reference &amp; Lookup</h3><span class="db-count">20+ tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag">bank</span><span class="db-tag">bank_account</span><span class="db-tag">bank_statement</span>
+                    <span class="db-tag">branch_of_the_bank</span><span class="db-tag">swift_codes</span><span class="db-tag">account_type</span>
+                    <span class="db-tag">country</span><span class="db-tag">province</span><span class="db-tag">district</span>
+                    <span class="db-tag">city</span><span class="db-tag">divisional_secretarial</span><span class="db-tag">gn_division</span>
+                    <span class="db-tag">currency_rates</span><span class="db-tag">currency_rate_type</span><span class="db-tag">share_certificate</span>
+                    <span class="db-tag">share_type</span><span class="db-tag">status</span><span class="db-tag">priority</span>
+                    <span class="db-tag">designation</span><span class="db-tag">departments</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-cog"></i> Group J: System &amp; Security</h3><span class="db-count">12 tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag">system_interface</span><span class="db-tag">interface_menu</span><span class="db-tag">interface_menu_gop_manager</span>
+                    <span class="db-tag">interface_sub_menu</span><span class="db-tag">settings</span><span class="db-tag">settings_type</span>
+                    <span class="db-tag">security_activity_logs</span><span class="db-tag">data_changed_log_manager</span>
+                    <span class="db-tag">whatsapp_config</span><span class="db-tag">whatsapp_message_log</span>
+                    <span class="db-tag">unlock_rate_limit</span><span class="db-tag">flyway_schema_history</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Tables Required -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">New Tables Required</h2>
+            <p class="section-desc">84 new tables across 6 functional categories</p>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-piggy-bank"></i> Deposits</h3><span class="db-count">10 new tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag new-table">fixed_deposit</span><span class="db-tag new-table">fd_interest_rate_slab</span>
+                    <span class="db-tag new-table">fd_certificate</span><span class="db-tag new-table">fd_renewal_history</span>
+                    <span class="db-tag new-table">fd_lien</span><span class="db-tag new-table">recurring_deposit</span>
+                    <span class="db-tag new-table">rd_installment_schedule</span><span class="db-tag new-table">rd_payment_history</span>
+                    <span class="db-tag new-table">savings_interest_tier</span><span class="db-tag new-table">account_dormancy</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-exchange-alt"></i> Transactions</h3><span class="db-count">12 new tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag new-table">interbank_transfer</span><span class="db-tag new-table">ceft_batch</span>
+                    <span class="db-tag new-table">slips_batch</span><span class="db-tag new-table">standing_order</span>
+                    <span class="db-tag new-table">standing_order_execution_log</span><span class="db-tag new-table">direct_debit_mandate</span>
+                    <span class="db-tag new-table">direct_debit_execution_log</span><span class="db-tag new-table">cheque_book</span>
+                    <span class="db-tag new-table">cheque_leaf</span><span class="db-tag new-table">cheque_clearing</span>
+                    <span class="db-tag new-table">cheque_return_reason</span><span class="db-tag new-table">demand_draft</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-credit-card"></i> Payment Gateway</h3><span class="db-count">10 new tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag new-table">merchant</span><span class="db-tag new-table">merchant_api_key</span>
+                    <span class="db-tag new-table">payment_transaction</span><span class="db-tag new-table">payment_refund</span>
+                    <span class="db-tag new-table">merchant_settlement</span><span class="db-tag new-table">biller</span>
+                    <span class="db-tag new-table">biller_category</span><span class="db-tag new-table">bill_payment</span>
+                    <span class="db-tag new-table">qr_merchant</span><span class="db-tag new-table">qr_payment_transaction</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-handshake"></i> Joint Venture</h3><span class="db-count">11 new tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag new-table">joint_venture</span><span class="db-tag new-table">jv_partner</span>
+                    <span class="db-tag new-table">jv_signatory_rule</span><span class="db-tag new-table">jv_agreement</span>
+                    <span class="db-tag new-table">jv_pnl_period</span><span class="db-tag new-table">jv_pnl_distribution</span>
+                    <span class="db-tag new-table">jv_income_expense</span><span class="db-tag new-table">escrow_account</span>
+                    <span class="db-tag new-table">escrow_condition</span><span class="db-tag new-table">escrow_release</span>
+                    <span class="db-tag new-table">escrow_dispute</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-chart-line"></i> Investments</h3><span class="db-count">22 new tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag new-table">investment_account</span><span class="db-tag new-table">security_master</span>
+                    <span class="db-tag new-table">stock_transaction</span><span class="db-tag new-table">portfolio_holding</span>
+                    <span class="db-tag new-table">dividend_record</span><span class="db-tag new-table">money_market_instrument</span>
+                    <span class="db-tag new-table">mm_transaction</span><span class="db-tag new-table">repo_agreement</span>
+                    <span class="db-tag new-table">government_bond</span><span class="db-tag new-table">bond_coupon_schedule</span>
+                    <span class="db-tag new-table">bond_transaction</span><span class="db-tag new-table">unit_trust_fund</span>
+                    <span class="db-tag new-table">unit_holder</span><span class="db-tag new-table">unit_transaction</span>
+                    <span class="db-tag new-table">fund_nav_history</span><span class="db-tag new-table">managed_portfolio</span>
+                    <span class="db-tag new-table">portfolio_mandate</span><span class="db-tag new-table">portfolio_allocation</span>
+                    <span class="db-tag new-table">portfolio_fee</span><span class="db-tag new-table">corporate_bond</span>
+                    <span class="db-tag new-table">bond_issuer</span><span class="db-tag new-table">credit_rating_history</span>
+                </div>
+            </div>
+
+            <div class="db-group">
+                <div class="db-group-header"><h3><i class="fas fa-coins"></i> Specialized Lending</h3><span class="db-count">19 new tables</span></div>
+                <div class="db-table-list">
+                    <span class="db-tag new-table">property_valuation</span><span class="db-tag new-table">property_details</span>
+                    <span class="db-tag new-table">mortgage_registration</span><span class="db-tag new-table">vehicle_details</span>
+                    <span class="db-tag new-table">vehicle_valuation</span><span class="db-tag new-table">dealer</span>
+                    <span class="db-tag new-table">gold_item</span><span class="db-tag new-table">gold_price_rate</span>
+                    <span class="db-tag new-table">pawn_ticket</span><span class="db-tag new-table">vault_storage</span>
+                    <span class="db-tag new-table">overdraft_facility</span><span class="db-tag new-table">overdraft_utilization_log</span>
+                    <span class="db-tag new-table">lease_asset</span><span class="db-tag new-table">lease_agreement</span>
+                    <span class="db-tag new-table">lease_schedule</span><span class="db-tag new-table">micro_group</span>
+                    <span class="db-tag new-table">micro_group_member</span><span class="db-tag new-table">repayment_frequency</span>
+                    <span class="db-tag new-table">auction</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Model Diagram -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Entity Relationship Overview</h2>
+            <div class="arch-diagram">
+<pre>
+┌─────────────────────────────────────────────────────────────┐
+│                    USER &amp; MEMBER MANAGEMENT                  │
+│  general_user_profile ←→ user_login ←→ user_role            │
+│  member ←→ member_bank_accounts ←→ membership_level         │
+│  nominess ←→ member_has_member ←→ mobile_no                 │
+└──────────────────────────┬──────────────────────────────────┘
+                           │ FK: general_user_profile.id
+┌──────────────────────────▼──────────────────────────────────┐
+│                    ORGANIZATION MANAGEMENT                   │
+│  general_organization_profile ←→ gop_has_member             │
+│  organization_branches ←→ branch_manager                    │
+│  business_information ←→ business_sector                    │
+└──────────────────────────┬──────────────────────────────────┘
+                           │
+    ┌──────────────────────┼──────────────────────┐
+    ▼                      ▼                      ▼
+┌──────────────┐  ┌──────────────┐  ┌──────────────────────┐
+│ LOAN MGMT    │  │ DEPOSIT MGMT │  │ TRANSACTION SERVICES │
+│ (27 existing │  │ (10 new)     │  │ (12 new)             │
+│  + 19 new)   │  │              │  │                      │
+│ loan         │  │ fixed_deposit│  │ interbank_transfer   │
+│ loan_manager │  │ recurring_dep│  │ standing_order       │
+│ installment  │  │ savings_tier │  │ cheque_clearing      │
+└──────┬───────┘  └──────┬───────┘  └──────────┬───────────┘
+       │                 │                      │
+       ▼                 ▼                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    FINANCE &amp; ACCOUNTING                      │
+│  fin_chart_of_account ←→ fin_journal_entry                  │
+│  fin_voucher ←→ fin_voucher_item ←→ fin_voucher_approval   │
+│  voucher ←→ voucher_item ←→ transaction_type                │
+└─────────────────────────────────────────────────────────────┘
+</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Naming Conventions -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Database Conventions</h2>
+            <div class="nfr-grid">
+                <div class="nfr-card">
+                    <h3><i class="fas fa-code"></i> Naming</h3>
+                    <div class="nfr-item"><span class="nfr-label">Table names</span><span class="nfr-value">snake_case</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Column names</span><span class="nfr-value">snake_case</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Primary keys (existing)</span><span class="nfr-value">INT AUTO_INCREMENT</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Primary keys (new)</span><span class="nfr-value">BIGINT AUTO_INCREMENT</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Foreign keys</span><span class="nfr-value">{table}_id</span></div>
+                </div>
+                <div class="nfr-card">
+                    <h3><i class="fas fa-database"></i> Standards</h3>
+                    <div class="nfr-item"><span class="nfr-label">Audit columns</span><span class="nfr-value">created_at, updated_at</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Soft delete</span><span class="nfr-value">is_active / status</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Migrations</span><span class="nfr-value">Flyway</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Connector (Java)</span><span class="nfr-value">MariaDB JDBC 3.x</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Connector (Node)</span><span class="nfr-value">mysql2</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand"><img src="logo.svg" alt="TEMCO Bank" class="footer-logo"><p>TEMCO Banking Application — SRS v1.0</p></div>
+                <div class="footer-links">
+                    <a href="index.html">Overview</a><a href="architecture.html">Architecture</a><a href="features.html">Services</a>
+                    <a href="database.html">Database</a><a href="api.html">API</a><a href="timeline.html">Timeline</a><a href="runsheet.html">Runsheet</a>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>Developed by <strong>Temco Bank Web Services</strong> &bull; SRS v1.0 &bull; February 2026</p></div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

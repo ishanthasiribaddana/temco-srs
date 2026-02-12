@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API — TEMCO Banking App SRS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <nav class="top-nav" id="topNav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="logo.svg" alt="TEMCO Bank" class="logo-img"></a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link">Overview</a>
+                <a href="architecture.html" class="nav-link">Architecture</a>
+                <a href="features.html" class="nav-link">Services</a>
+                <a href="database.html" class="nav-link">Database</a>
+                <a href="api.html" class="nav-link active">API</a>
+                <a href="timeline.html" class="nav-link">Timeline</a>
+                <a href="runsheet.html" class="nav-link">Runsheet</a>
+            </div>
+            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <div class="page-hero">
+        <h1>API Specification</h1>
+        <p>RESTful API endpoints organized by module — JAX-RS on WildFly 31 + Node.js data services</p>
+    </div>
+
+    <!-- API Overview -->
+    <section class="section">
+        <div class="container">
+            <div class="summary-bar">
+                <div class="summary-stat"><div class="stat-num">8</div><div class="stat-lbl">API Modules</div></div>
+                <div class="summary-stat"><div class="stat-num">2</div><div class="stat-lbl">Backend Servers</div></div>
+                <div class="summary-stat"><div class="stat-num">JWT</div><div class="stat-lbl">Authentication</div></div>
+                <div class="summary-stat"><div class="stat-num">RBAC</div><div class="stat-lbl">Authorization</div></div>
+            </div>
+
+            <div class="nfr-grid mb-48">
+                <div class="nfr-card">
+                    <h3><i class="fas fa-server"></i> WildFly Backend (:8080)</h3>
+                    <div class="nfr-item"><span class="nfr-label">Base URL</span><span class="nfr-value">/temco-loan-system/api/v1</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Framework</span><span class="nfr-value">JAX-RS (Jakarta EE)</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Auth</span><span class="nfr-value">Bearer JWT token</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Content-Type</span><span class="nfr-value">application/json</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Docs</span><span class="nfr-value">MicroProfile OpenAPI 3.1</span></div>
+                </div>
+                <div class="nfr-card">
+                    <h3><i class="fas fa-code"></i> Node.js API (:8086)</h3>
+                    <div class="nfr-item"><span class="nfr-label">Base URL</span><span class="nfr-value">/api</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Framework</span><span class="nfr-value">Express.js</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Auth</span><span class="nfr-value">Session / JWT</span></div>
+                    <div class="nfr-item"><span class="nfr-label">DB Driver</span><span class="nfr-value">mysql2</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Purpose</span><span class="nfr-value">Data services, student lookup</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Authentication APIs -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="api-group">
+                <h3><i class="fas fa-lock"></i> Authentication &amp; User Management</h3>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/customer/auth/login</span><span class="api-desc">Authenticate user, return JWT token</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/customer/auth/logout</span><span class="api-desc">Invalidate session token</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/customer/auth/refresh</span><span class="api-desc">Refresh JWT token</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/customer/auth/forgot-password</span><span class="api-desc">Initiate password reset (OTP via WhatsApp)</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/customer/auth/reset-password</span><span class="api-desc">Reset password with OTP verification</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/customer/auth/profile</span><span class="api-desc">Get current user profile</span></div>
+                <div class="api-endpoint"><span class="api-method method-put">PUT</span><span class="api-path">/api/v1/customer/auth/profile</span><span class="api-desc">Update user profile</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/users</span><span class="api-desc">List all users (Admin)</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/users</span><span class="api-desc">Create new user (Admin)</span></div>
+                <div class="api-endpoint"><span class="api-method method-put">PUT</span><span class="api-path">/api/v1/users/{id}/unlock</span><span class="api-desc">Unlock locked account (Admin)</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/roles</span><span class="api-desc">List all roles</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/permissions</span><span class="api-desc">List all permissions</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loan APIs -->
+    <section class="section">
+        <div class="container">
+            <div class="api-group">
+                <h3><i class="fas fa-hand-holding-usd"></i> Loan Management</h3>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/loans</span><span class="api-desc">List all loan products</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/loans/{id}</span><span class="api-desc">Get loan product details</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/loan-applications</span><span class="api-desc">Submit new loan application</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/loan-applications</span><span class="api-desc">List loan applications (filtered by role)</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/loan-applications/{id}</span><span class="api-desc">Get application details with status history</span></div>
+                <div class="api-endpoint"><span class="api-method method-put">PUT</span><span class="api-path">/api/v1/loan-applications/{id}/status</span><span class="api-desc">Update application status (approve/reject)</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/loan-applications/{id}/installments</span><span class="api-desc">Get installment schedule</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/loan-applications/{id}/guarantors</span><span class="api-desc">Add guarantor to application</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/loan-applications/{id}/payments</span><span class="api-desc">Get payment history</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/loan-applications/{id}/payments</span><span class="api-desc">Record loan payment</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/interest-rates</span><span class="api-desc">List interest rates by loan type</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/emi-calculator</span><span class="api-desc">Calculate EMI for given parameters</span></div>
+            </div>
+
+            <div class="api-group mt-48">
+                <h3><i class="fas fa-piggy-bank"></i> Deposit Management</h3>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/accounts</span><span class="api-desc">Open new account (savings/current)</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/accounts</span><span class="api-desc">List member accounts</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/accounts/{id}/balance</span><span class="api-desc">Get account balance</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/accounts/{id}/statement</span><span class="api-desc">Get account statement (date range)</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/fixed-deposits</span><span class="api-desc">Create fixed deposit</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/fixed-deposits</span><span class="api-desc">List FDs for member</span></div>
+                <div class="api-endpoint"><span class="api-method method-put">PUT</span><span class="api-path">/api/v1/fixed-deposits/{id}/renew</span><span class="api-desc">Renew fixed deposit</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/fixed-deposits/{id}/withdraw</span><span class="api-desc">Premature withdrawal</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/recurring-deposits</span><span class="api-desc">Create recurring deposit</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/fd-rates</span><span class="api-desc">Get FD interest rate slabs</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transaction APIs -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="api-group">
+                <h3><i class="fas fa-exchange-alt"></i> Transaction Services</h3>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/transfers/internal</span><span class="api-desc">Internal fund transfer</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/transfers/ceft</span><span class="api-desc">CEFT interbank transfer</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/transfers/slips</span><span class="api-desc">SLIPS batch transfer</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/transfers</span><span class="api-desc">List transfer history</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/standing-orders</span><span class="api-desc">Create standing order</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/standing-orders</span><span class="api-desc">List standing orders</span></div>
+                <div class="api-endpoint"><span class="api-method method-delete">DEL</span><span class="api-path">/api/v1/standing-orders/{id}</span><span class="api-desc">Cancel standing order</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/bill-payments</span><span class="api-desc">Pay bill</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/billers</span><span class="api-desc">List available billers</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/cheques/issue</span><span class="api-desc">Issue cheque book</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/cheques/stop</span><span class="api-desc">Stop cheque request</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/demand-drafts</span><span class="api-desc">Issue demand draft</span></div>
+            </div>
+
+            <div class="api-group mt-48">
+                <h3><i class="fas fa-credit-card"></i> Payment Gateway</h3>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/merchants</span><span class="api-desc">Register merchant</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/merchants/{id}/api-keys</span><span class="api-desc">Generate API key</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/payments/initiate</span><span class="api-desc">Initiate payment</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/payments/{id}/status</span><span class="api-desc">Check payment status</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/payments/{id}/refund</span><span class="api-desc">Process refund</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/qr/generate</span><span class="api-desc">Generate QR code for merchant</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/qr/pay</span><span class="api-desc">Process QR payment</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JV & Investment APIs -->
+    <section class="section">
+        <div class="container">
+            <div class="api-group">
+                <h3><i class="fas fa-handshake"></i> Joint Venture</h3>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/joint-ventures</span><span class="api-desc">Create JV account</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/joint-ventures</span><span class="api-desc">List JV accounts</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/joint-ventures/{id}</span><span class="api-desc">Get JV details with partners</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/joint-ventures/{id}/partners</span><span class="api-desc">Add partner to JV</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/joint-ventures/{id}/distribute</span><span class="api-desc">Distribute P&L to partners</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/joint-ventures/{id}/pnl</span><span class="api-desc">Get P&L statement</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/escrow</span><span class="api-desc">Create escrow account</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/escrow/{id}/release</span><span class="api-desc">Release escrow funds</span></div>
+            </div>
+
+            <div class="api-group mt-48">
+                <h3><i class="fas fa-chart-line"></i> Investment Services</h3>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/investments/accounts</span><span class="api-desc">Create investment account</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/investments/stocks/buy</span><span class="api-desc">Buy stock</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/investments/stocks/sell</span><span class="api-desc">Sell stock</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/investments/portfolio</span><span class="api-desc">Get portfolio holdings</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/investments/portfolio/valuation</span><span class="api-desc">Mark-to-market valuation</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/securities</span><span class="api-desc">List available securities</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/investments/bonds/buy</span><span class="api-desc">Buy government/corporate bond</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/investments/unit-trusts/subscribe</span><span class="api-desc">Subscribe to unit trust</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/investments/unit-trusts/redeem</span><span class="api-desc">Redeem unit trust units</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/investments/money-market</span><span class="api-desc">List money market instruments</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Finance & Reports APIs -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="api-group">
+                <h3><i class="fas fa-calculator"></i> Finance &amp; Accounting</h3>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/chart-of-accounts</span><span class="api-desc">List chart of accounts</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/journal-entries</span><span class="api-desc">Create journal entry</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/journal-entries</span><span class="api-desc">List journal entries</span></div>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/vouchers</span><span class="api-desc">Create voucher</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/vouchers</span><span class="api-desc">List vouchers</span></div>
+                <div class="api-endpoint"><span class="api-method method-put">PUT</span><span class="api-path">/api/v1/vouchers/{id}/approve</span><span class="api-desc">Approve voucher</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/reconciliation</span><span class="api-desc">Bank reconciliation</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/reports/balance-sheet</span><span class="api-desc">Generate balance sheet (JasperReports)</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/reports/income-statement</span><span class="api-desc">Generate income statement</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/v1/reports/trial-balance</span><span class="api-desc">Generate trial balance</span></div>
+            </div>
+
+            <div class="api-group mt-48">
+                <h3><i class="fas fa-code"></i> Node.js Data Services (:8086)</h3>
+                <div class="api-endpoint"><span class="api-method method-post">POST</span><span class="api-path">/api/v1/auth/login</span><span class="api-desc">Node.js auth (BCrypt + PBE)</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/customers</span><span class="api-desc">List customers from GUP</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/student-lookup?nic={nic}</span><span class="api-desc">Lookup student by NIC</span></div>
+                <div class="api-endpoint"><span class="api-method method-get">GET</span><span class="api-path">/api/students?page={n}&search={q}</span><span class="api-desc">Paginated student list with search</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Response Format -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Authentication Response Format</h2>
+            <div class="arch-diagram">
+<pre>
+// POST /api/v1/customer/auth/login
+// Request:
+{
+    "username": "ishantha@gmail.com",
+    "password": "••••••••"
+}
+
+// Response (200 OK):
+{
+    "success": true,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+        "id": 1,
+        "username": "ishantha@gmail.com",
+        "email": "ishantha@gmail.com",
+        "fullName": "Ishantha Siribaddana",
+        "nic": "199012345678",
+        "roleId": 1,
+        "roleName": "Super Admin"
+    },
+    "expiresAt": "2026-02-13T22:00:00.000Z"
+}
+
+// Error Response (401):
+{
+    "success": false,
+    "message": "Invalid credentials",
+    "remainingAttempts": 3
+}
+
+// Error Response (423 Locked):
+{
+    "success": false,
+    "message": "Account locked. Contact administrator.",
+    "lockedAt": "2026-02-12T21:00:00.000Z"
+}
+</pre>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand"><img src="logo.svg" alt="TEMCO Bank" class="footer-logo"><p>TEMCO Banking Application — SRS v1.0</p></div>
+                <div class="footer-links">
+                    <a href="index.html">Overview</a><a href="architecture.html">Architecture</a><a href="features.html">Services</a>
+                    <a href="database.html">Database</a><a href="api.html">API</a><a href="timeline.html">Timeline</a><a href="runsheet.html">Runsheet</a>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>Developed by <strong>Temco Bank Web Services</strong> &bull; SRS v1.0 &bull; February 2026</p></div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

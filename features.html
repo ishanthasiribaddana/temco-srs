@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services &amp; Features — TEMCO Banking App SRS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <nav class="top-nav" id="topNav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><img src="logo.svg" alt="TEMCO Bank" class="logo-img"></a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link">Overview</a>
+                <a href="architecture.html" class="nav-link">Architecture</a>
+                <a href="features.html" class="nav-link active">Services</a>
+                <a href="database.html" class="nav-link">Database</a>
+                <a href="api.html" class="nav-link">API</a>
+                <a href="timeline.html" class="nav-link">Timeline</a>
+                <a href="runsheet.html" class="nav-link">Runsheet</a>
+            </div>
+            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <div class="page-hero">
+        <h1>Banking Services &amp; Features</h1>
+        <p>40 banking services across 3 tiers with 300 functional requirements</p>
+    </div>
+
+    <!-- Summary Stats -->
+    <section class="section">
+        <div class="container">
+            <div class="summary-bar">
+                <div class="summary-stat"><div class="stat-num">12</div><div class="stat-lbl">Lending Products</div></div>
+                <div class="summary-stat"><div class="stat-num">8</div><div class="stat-lbl">Deposit Products</div></div>
+                <div class="summary-stat"><div class="stat-num">9</div><div class="stat-lbl">Transaction Services</div></div>
+                <div class="summary-stat"><div class="stat-num">5</div><div class="stat-lbl">Joint Venture Services</div></div>
+                <div class="summary-stat"><div class="stat-num">6</div><div class="stat-lbl">Investment Services</div></div>
+                <div class="summary-stat"><div class="stat-num">34</div><div class="stat-lbl">Non-Functional Reqs</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIER 1: LENDING -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Tier 1: Lending Products</h2>
+            <p class="section-desc">12 loan types — 89 functional requirements — Core banking priority</p>
+
+            <div class="service-section">
+                <div class="service-header">
+                    <span class="service-id">FR-L001</span>
+                    <h3>Personal Loans</h3>
+                </div>
+                <p class="service-desc">Unsecured loans for personal needs — education, medical, travel, emergencies. Guarantor-backed with multi-level approval workflow.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Amount Range</div><div class="attr-value">LKR 50K — 5M</div></div>
+                    <div class="attr-card"><div class="attr-label">Tenure</div><div class="attr-value">6 — 60 months</div></div>
+                    <div class="attr-card"><div class="attr-label">Interest</div><div class="attr-value">Reducing / Flat</div></div>
+                    <div class="attr-card"><div class="attr-label">Security</div><div class="attr-value">Unsecured</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag existing">loan</span>
+                    <span class="table-tag existing">loan_manager</span>
+                    <span class="table-tag existing">loan_type</span>
+                    <span class="table-tag existing">loan_interest_rate</span>
+                    <span class="table-tag existing">loan_installement_plan</span>
+                    <span class="table-tag existing">gurantor_manager</span>
+                    <span class="table-tag existing">penalty</span>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header">
+                    <span class="service-id">FR-L002</span>
+                    <h3>Student Loans</h3>
+                </div>
+                <p class="service-desc">Education financing linked to scholarship percentages and IJTS system. Multi-currency support (LKR, GBP, USD) with intake-based allocation.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Amount</div><div class="attr-value">Based on total_due</div></div>
+                    <div class="attr-card"><div class="attr-label">Scholarship</div><div class="attr-value">0% — 100%</div></div>
+                    <div class="attr-card"><div class="attr-label">Currency</div><div class="attr-value">LKR, GBP, USD</div></div>
+                    <div class="attr-card"><div class="attr-label">Source</div><div class="attr-value">IJTS System</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag existing">materialized_student_loan_eligible_student_table</span>
+                    <span class="table-tag existing">scholarship_catergory</span>
+                    <span class="table-tag existing">intake</span>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header">
+                    <span class="service-id">FR-L003</span>
+                    <h3>Home / Mortgage Loans</h3>
+                </div>
+                <p class="service-desc">Secured loans against property for home purchase, construction, or renovation. Up to 80% LTV with stage-wise disbursement.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Amount Range</div><div class="attr-value">LKR 500K — 50M</div></div>
+                    <div class="attr-card"><div class="attr-label">Tenure</div><div class="attr-value">Up to 20 years</div></div>
+                    <div class="attr-card"><div class="attr-label">LTV Ratio</div><div class="attr-value">Up to 80%</div></div>
+                    <div class="attr-card"><div class="attr-label">Security</div><div class="attr-value">Property</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag new">property_valuation</span>
+                    <span class="table-tag new">mortgage_registration</span>
+                    <span class="table-tag new">property_details</span>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header">
+                    <span class="service-id">FR-L004</span>
+                    <h3>Vehicle Loans</h3>
+                </div>
+                <p class="service-desc">Auto financing for new and used vehicles. Dealer-direct disbursement with comprehensive insurance requirement.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Amount Range</div><div class="attr-value">LKR 200K — 20M</div></div>
+                    <div class="attr-card"><div class="attr-label">Tenure</div><div class="attr-value">Up to 7 years</div></div>
+                    <div class="attr-card"><div class="attr-label">LTV (New)</div><div class="attr-value">90%</div></div>
+                    <div class="attr-card"><div class="attr-label">LTV (Used)</div><div class="attr-value">70%</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag new">vehicle_details</span>
+                    <span class="table-tag new">vehicle_valuation</span>
+                    <span class="table-tag new">dealer</span>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header">
+                    <span class="service-id">FR-L005</span>
+                    <h3>Business Loans</h3>
+                </div>
+                <p class="service-desc">Working capital and expansion loans for SMEs. Supports revolving credit facilities and multiple collateral types.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Amount Range</div><div class="attr-value">LKR 100K — 100M</div></div>
+                    <div class="attr-card"><div class="attr-label">Tenure</div><div class="attr-value">6 — 120 months</div></div>
+                    <div class="attr-card"><div class="attr-label">Security</div><div class="attr-value">Secured / Unsecured</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag existing">business_information</span>
+                    <span class="table-tag existing">business_sector</span>
+                    <span class="table-tag existing">general_organization_profile</span>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header">
+                    <span class="service-id">FR-L006</span>
+                    <h3>Microfinance Loans</h3>
+                </div>
+                <p class="service-desc">Small-value loans for micro-entrepreneurs. Group lending with solidarity groups of 3-5 members and progressive lending.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Amount Range</div><div class="attr-value">LKR 10K — 500K</div></div>
+                    <div class="attr-card"><div class="attr-label">Tenure</div><div class="attr-value">3 — 24 months</div></div>
+                    <div class="attr-card"><div class="attr-label">Security</div><div class="attr-value">Group guarantee</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag new">micro_group</span>
+                    <span class="table-tag new">micro_group_member</span>
+                    <span class="table-tag new">repayment_frequency</span>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header">
+                    <span class="service-id">FR-L007</span>
+                    <h3>Gold Loans</h3>
+                </div>
+                <p class="service-desc">Loans secured against gold jewelry. Daily gold price integration, vault storage tracking, and auction for unredeemed items.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Amount</div><div class="attr-value">75% of gold value</div></div>
+                    <div class="attr-card"><div class="attr-label">Tenure</div><div class="attr-value">1 — 12 months</div></div>
+                    <div class="attr-card"><div class="attr-label">Security</div><div class="attr-value">Gold jewelry</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag new">gold_item</span>
+                    <span class="table-tag new">gold_price_rate</span>
+                    <span class="table-tag new">pawn_ticket</span>
+                    <span class="table-tag new">vault_storage</span>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header">
+                    <span class="service-id">FR-L008</span>
+                    <h3>Overdraft Facility</h3>
+                </div>
+                <p class="service-desc">Pre-approved credit line on accounts. Interest charged only on utilized amount using daily balance method.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Limit</div><div class="attr-value">LKR 50K — 10M</div></div>
+                    <div class="attr-card"><div class="attr-label">Tenure</div><div class="attr-value">12 months (renewable)</div></div>
+                    <div class="attr-card"><div class="attr-label">Interest</div><div class="attr-value">Daily balance</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag new">overdraft_facility</span>
+                    <span class="table-tag new">overdraft_utilization_log</span>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header">
+                    <span class="service-id">FR-L009</span>
+                    <h3>Leasing</h3>
+                </div>
+                <p class="service-desc">Asset-based financing for vehicles, equipment, and machinery. Finance lease and operating lease with amortization schedules.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Amount Range</div><div class="attr-value">LKR 500K — 50M</div></div>
+                    <div class="attr-card"><div class="attr-label">Tenure</div><div class="attr-value">12 — 60 months</div></div>
+                    <div class="attr-card"><div class="attr-label">Types</div><div class="attr-value">Finance / Operating</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag new">lease_asset</span>
+                    <span class="table-tag new">lease_agreement</span>
+                    <span class="table-tag new">lease_schedule</span>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header">
+                    <span class="service-id">FR-L010</span>
+                    <h3>Factoring</h3>
+                </div>
+                <p class="service-desc">Invoice/receivables financing for businesses. 70-90% advance rate with branch-wise factoring fees.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Advance Rate</div><div class="attr-value">70% — 90%</div></div>
+                    <div class="attr-card"><div class="attr-label">Type</div><div class="attr-value">Recourse / Non-recourse</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag existing">factoring_fee</span>
+                    <span class="table-tag existing">branch_has_factoring_fee</span>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header">
+                    <span class="service-id">FR-L011</span>
+                    <h3>Loan Against Fixed Deposits</h3>
+                </div>
+                <p class="service-desc">Loans secured against member's own FD certificates. Up to 90% of FD value at FD rate + margin.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Amount</div><div class="attr-value">90% of FD value</div></div>
+                    <div class="attr-card"><div class="attr-label">Interest</div><div class="attr-value">FD rate + 1-2%</div></div>
+                    <div class="attr-card"><div class="attr-label">Tenure</div><div class="attr-value">Up to FD maturity</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag new">fd_lien</span>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header">
+                    <span class="service-id">FR-L012</span>
+                    <h3>Pawning</h3>
+                </div>
+                <p class="service-desc">Short-term loans against movable assets. Pawn ticket generation, vault tracking, and auction for unredeemed items.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Security</div><div class="attr-value">Movable assets</div></div>
+                    <div class="attr-card"><div class="attr-label">Tenure</div><div class="attr-value">1 — 12 months</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag new">pawn_ticket</span>
+                    <span class="table-tag new">auction</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIER 1: DEPOSITS -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Tier 1: Deposit Products</h2>
+            <p class="section-desc">8 deposit types — 52 functional requirements</p>
+
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-D001</span><h3>Savings Accounts</h3></div>
+                <p class="service-desc">Interest-bearing savings accounts with tiered rates, joint account support, nominee registration, and dormancy rules.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Types</div><div class="attr-value">Individual, Joint, Minor, Org</div></div>
+                    <div class="attr-card"><div class="attr-label">Interest</div><div class="attr-value">Daily balance method</div></div>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-D002</span><h3>Fixed Deposits</h3></div>
+                <p class="service-desc">Term deposits with guaranteed fixed rates. Auto-renewal, premature withdrawal, monthly interest payout, and WHT deduction.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Minimum</div><div class="attr-value">LKR 10,000</div></div>
+                    <div class="attr-card"><div class="attr-label">Tenure</div><div class="attr-value">1 — 60 months</div></div>
+                    <div class="attr-card"><div class="attr-label">Payout</div><div class="attr-value">Maturity / Monthly</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag new">fixed_deposit</span>
+                    <span class="table-tag new">fd_interest_rate_slab</span>
+                    <span class="table-tag new">fd_certificate</span>
+                    <span class="table-tag new">fd_renewal_history</span>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-D003</span><h3>Recurring Deposits</h3></div>
+                <p class="service-desc">Monthly fixed installment savings with compound interest. Auto-debit from linked savings account.</p>
+                <div class="service-attrs">
+                    <div class="attr-card"><div class="attr-label">Installment</div><div class="attr-value">LKR 500 — 500K</div></div>
+                    <div class="attr-card"><div class="attr-label">Tenure</div><div class="attr-value">6 — 120 months</div></div>
+                    <div class="attr-card"><div class="attr-label">Interest</div><div class="attr-value">Compounded quarterly</div></div>
+                </div>
+                <div class="tables-used">
+                    <span class="table-tag new">recurring_deposit</span>
+                    <span class="table-tag new">rd_installment_schedule</span>
+                    <span class="table-tag new">rd_payment_history</span>
+                </div>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-D004</span><h3>Current Accounts</h3></div>
+                <p class="service-desc">Transaction accounts with cheque book issuance, overdraft linkage, and daily/monthly statements.</p>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-D005</span><h3>Children's Savings</h3></div>
+                <p class="service-desc">Special accounts for minors with guardian management. Auto-converts to regular savings at age 18.</p>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-D006</span><h3>Senior Citizen Deposits</h3></div>
+                <p class="service-desc">Higher-rate FDs for members aged 55+. Premium rate = regular FD rate + 0.5-1%.</p>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-D007</span><h3>Corporate Deposits</h3></div>
+                <p class="service-desc">Bulk deposits from organizations with negotiated rates and multiple authorized signatories.</p>
+            </div>
+
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-D008</span><h3>Call Deposits</h3></div>
+                <p class="service-desc">Short-term deposits withdrawable on demand with tiered interest rates based on balance slabs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIER 2: TRANSACTIONS -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Tier 2: Transaction Services</h2>
+            <p class="section-desc">9 transaction and payment services — 58 functional requirements</p>
+
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-T001</span><h3>Internal Fund Transfers</h3></div>
+                <p class="service-desc">Real-time transfers between TEMCO accounts with scheduled/recurring support and beneficiary management.</p>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-T002</span><h3>CEFT/SLIPS Interbank Transfers</h3></div>
+                <p class="service-desc">Transfers to/from other banks via CBSL payment systems. CEFT (real-time) and SLIPS (batch) with SWIFT validation.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">interbank_transfer</span>
+                    <span class="table-tag new">ceft_batch</span>
+                    <span class="table-tag new">slips_batch</span>
+                    <span class="table-tag existing">swift_codes</span>
+                    <span class="table-tag existing">bank</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-T003</span><h3>Standing Orders</h3></div>
+                <p class="service-desc">Recurring automatic transfers on predefined dates with frequency options and failure handling.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">standing_order</span>
+                    <span class="table-tag new">standing_order_execution_log</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-T004</span><h3>Direct Debits</h3></div>
+                <p class="service-desc">Auto-debit for loan repayments, utility bills, and recurring obligations with mandate management.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">direct_debit_mandate</span>
+                    <span class="table-tag new">direct_debit_execution_log</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-T005</span><h3>Payment Gateway</h3></div>
+                <p class="service-desc">Online payment acceptance for merchants with API key management, webhooks, and PCI-DSS compliance.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">merchant</span>
+                    <span class="table-tag new">merchant_api_key</span>
+                    <span class="table-tag new">payment_transaction</span>
+                    <span class="table-tag new">payment_refund</span>
+                    <span class="table-tag new">merchant_settlement</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-T006</span><h3>Bill Payments</h3></div>
+                <p class="service-desc">Utility, telecom, insurance bill payments with biller directory and scheduled payments.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">biller</span>
+                    <span class="table-tag new">biller_category</span>
+                    <span class="table-tag new">bill_payment</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-T007</span><h3>QR Code Payments</h3></div>
+                <p class="service-desc">Scan-to-pay at merchants using LankaPay QR or proprietary QR with instant confirmation.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">qr_merchant</span>
+                    <span class="table-tag new">qr_payment_transaction</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-T008</span><h3>Cheque Management</h3></div>
+                <p class="service-desc">Cheque book issuance, inward/outward clearing, returns handling, and stop-cheque requests.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">cheque_book</span>
+                    <span class="table-tag new">cheque_leaf</span>
+                    <span class="table-tag new">cheque_clearing</span>
+                    <span class="table-tag new">cheque_return_reason</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-T009</span><h3>Demand Drafts</h3></div>
+                <p class="service-desc">Bank-guaranteed payment instruments with DD issuance, tracking, and cancellation with refund.</p>
+                <div class="tables-used"><span class="table-tag new">demand_draft</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIER 3: JV -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Tier 3: Joint Venture Services</h2>
+            <p class="section-desc">5 JV services — 30 functional requirements</p>
+
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-JV001</span><h3>JV Account Management</h3></div>
+                <p class="service-desc">Multi-party accounts with shared ownership, signatory rules (any one/all/majority), and separate ledgers.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">joint_venture</span>
+                    <span class="table-tag new">jv_partner</span>
+                    <span class="table-tag new">jv_signatory_rule</span>
+                    <span class="table-tag new">jv_agreement</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-JV002</span><h3>Profit/Loss Sharing</h3></div>
+                <p class="service-desc">Automated P&L distribution among partners based on ownership percentages with configurable frequency.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">jv_pnl_period</span>
+                    <span class="table-tag new">jv_pnl_distribution</span>
+                    <span class="table-tag new">jv_income_expense</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-JV003</span><h3>JV Loan Facility</h3></div>
+                <p class="service-desc">Lending to joint ventures with shared liability — joint, several, or proportional.</p>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-JV004</span><h3>JV Reporting &amp; Compliance</h3></div>
+                <p class="service-desc">Consolidated balance sheets, income statements, and partner-wise capital account statements.</p>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-JV005</span><h3>Escrow for JV Transactions</h3></div>
+                <p class="service-desc">Neutral holding of JV funds until conditions are met. Multi-party approval, partial releases, and dispute resolution.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">escrow_account</span>
+                    <span class="table-tag new">escrow_condition</span>
+                    <span class="table-tag new">escrow_release</span>
+                    <span class="table-tag new">escrow_dispute</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIER 3: INVESTMENTS -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Tier 3: Investment Services</h2>
+            <p class="section-desc">6 investment services — 37 functional requirements</p>
+
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-I001</span><h3>Stock Market Investments</h3></div>
+                <p class="service-desc">Equity investments on the Colombo Stock Exchange (CSE). Portfolio management, dividend tracking, and mark-to-market valuation.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">investment_account</span>
+                    <span class="table-tag new">security_master</span>
+                    <span class="table-tag new">stock_transaction</span>
+                    <span class="table-tag new">portfolio_holding</span>
+                    <span class="table-tag new">dividend_record</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-I002</span><h3>Money Market Investments</h3></div>
+                <p class="service-desc">T-bills, commercial paper, and repo agreements with yield-to-maturity calculations and maturity ladder reports.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">money_market_instrument</span>
+                    <span class="table-tag new">mm_transaction</span>
+                    <span class="table-tag new">repo_agreement</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-I003</span><h3>Government Securities</h3></div>
+                <p class="service-desc">Treasury bonds and sovereign bond investments with coupon tracking and secondary market trading.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">government_bond</span>
+                    <span class="table-tag new">bond_coupon_schedule</span>
+                    <span class="table-tag new">bond_transaction</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-I004</span><h3>Unit Trust / Mutual Funds</h3></div>
+                <p class="service-desc">Pooled investment products with daily NAV calculation, unit purchases/redemptions, and SIP support.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">unit_trust_fund</span>
+                    <span class="table-tag new">unit_holder</span>
+                    <span class="table-tag new">unit_transaction</span>
+                    <span class="table-tag new">fund_nav_history</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-I005</span><h3>Portfolio Management</h3></div>
+                <p class="service-desc">Managed portfolios for HNW clients with investment mandates, asset allocation, and performance reporting.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">managed_portfolio</span>
+                    <span class="table-tag new">portfolio_mandate</span>
+                    <span class="table-tag new">portfolio_allocation</span>
+                    <span class="table-tag new">portfolio_fee</span>
+                </div>
+            </div>
+            <div class="service-section">
+                <div class="service-header"><span class="service-id">FR-I006</span><h3>Fixed Income Securities</h3></div>
+                <p class="service-desc">Corporate bonds and debentures with credit rating tracking, yield analysis, and secondary market trading.</p>
+                <div class="tables-used">
+                    <span class="table-tag new">corporate_bond</span>
+                    <span class="table-tag new">bond_issuer</span>
+                    <span class="table-tag new">credit_rating_history</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Non-Functional Requirements -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Non-Functional Requirements</h2>
+            <p class="section-desc">34 requirements across performance, security, availability, scalability, compliance, and usability</p>
+            <div class="nfr-grid">
+                <div class="nfr-card">
+                    <h3><i class="fas fa-tachometer-alt"></i> Performance</h3>
+                    <div class="nfr-item"><span class="nfr-label">Page load time</span><span class="nfr-value">&lt; 2 seconds</span></div>
+                    <div class="nfr-item"><span class="nfr-label">API response (P95)</span><span class="nfr-value">&lt; 500ms</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Concurrent users</span><span class="nfr-value">500+</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Transaction throughput</span><span class="nfr-value">100 TPS</span></div>
+                    <div class="nfr-item"><span class="nfr-label">DB query time</span><span class="nfr-value">&lt; 200ms</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Report generation</span><span class="nfr-value">&lt; 30 seconds</span></div>
+                </div>
+                <div class="nfr-card">
+                    <h3><i class="fas fa-shield-halved"></i> Security</h3>
+                    <div class="nfr-item"><span class="nfr-label">Transport encryption</span><span class="nfr-value">TLS 1.2+</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Password hashing</span><span class="nfr-value">BCrypt (cost ≥ 12)</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Auth tokens</span><span class="nfr-value">JWT (configurable)</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Access control</span><span class="nfr-value">RBAC on all endpoints</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Account lockout</span><span class="nfr-value">5 failed attempts</span></div>
+                    <div class="nfr-item"><span class="nfr-label">OTP verification</span><span class="nfr-value">WhatsApp / SMS</span></div>
+                </div>
+                <div class="nfr-card">
+                    <h3><i class="fas fa-server"></i> Availability</h3>
+                    <div class="nfr-item"><span class="nfr-label">System uptime</span><span class="nfr-value">99.9%</span></div>
+                    <div class="nfr-item"><span class="nfr-label">DB backup</span><span class="nfr-value">Daily + replication</span></div>
+                    <div class="nfr-item"><span class="nfr-label">RTO</span><span class="nfr-value">&lt; 4 hours</span></div>
+                    <div class="nfr-item"><span class="nfr-label">RPO</span><span class="nfr-value">&lt; 1 hour</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Failover</span><span class="nfr-value">Auto (master-slave)</span></div>
+                </div>
+                <div class="nfr-card">
+                    <h3><i class="fas fa-gavel"></i> Compliance</h3>
+                    <div class="nfr-item"><span class="nfr-label">CBSL reporting</span><span class="nfr-value">Monthly/Quarterly</span></div>
+                    <div class="nfr-item"><span class="nfr-label">AML/CFT</span><span class="nfr-value">STR reporting</span></div>
+                    <div class="nfr-item"><span class="nfr-label">KYC</span><span class="nfr-value">All account openings</span></div>
+                    <div class="nfr-item"><span class="nfr-label">WHT deduction</span><span class="nfr-value">On interest income</span></div>
+                    <div class="nfr-item"><span class="nfr-label">Data retention</span><span class="nfr-value">7 years minimum</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interest Formulas -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Interest Calculation Formulas</h2>
+            <div class="formula-card">
+                <h4>Reducing Balance EMI</h4>
+                <pre>EMI = P × r × (1+r)^n / ((1+r)^n - 1)
+Where: P = Principal, r = Monthly rate (annual/12), n = Number of installments</pre>
+            </div>
+            <div class="formula-card">
+                <h4>Flat Rate EMI</h4>
+                <pre>EMI = (P + (P × R × T)) / (T × 12)
+Where: P = Principal, R = Annual rate, T = Tenure in years</pre>
+            </div>
+            <div class="formula-card">
+                <h4>Daily Balance Interest (Savings)</h4>
+                <pre>Interest = Σ (Daily Balance × Annual Rate / 365)</pre>
+            </div>
+            <div class="formula-card">
+                <h4>Fixed Deposit Maturity</h4>
+                <pre>Maturity = P × (1 + r/n)^(n×t)
+Where: P = Principal, r = Annual rate, n = Compounding frequency, t = Tenure in years</pre>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand"><img src="logo.svg" alt="TEMCO Bank" class="footer-logo"><p>TEMCO Banking Application — SRS v1.0</p></div>
+                <div class="footer-links">
+                    <a href="index.html">Overview</a><a href="architecture.html">Architecture</a><a href="features.html">Services</a>
+                    <a href="database.html">Database</a><a href="api.html">API</a><a href="timeline.html">Timeline</a><a href="runsheet.html">Runsheet</a>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>Developed by <strong>Temco Bank Web Services</strong> &bull; SRS v1.0 &bull; February 2026</p></div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
