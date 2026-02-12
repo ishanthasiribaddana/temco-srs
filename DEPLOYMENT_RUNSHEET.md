@@ -1,8 +1,9 @@
 # TEMCO SRS Website — Deployment Runsheet
-**Document Version:** 1.0  
+**Document Version:** 1.1  
 **Created:** February 13, 2026  
+**Last Updated:** February 13, 2026  
 **Author:** DevOps Team  
-**Status:** Ready for Deployment
+**Status:** Deployed & Live
 
 ---
 
@@ -22,6 +23,10 @@
 | **SSH Alias** | `temco-prod` |
 | **Server Path** | `/apps/temco-srs` |
 | **SSL** | Let's Encrypt (Certbot auto-renewal) |
+| **CDN / Proxy** | Cloudflare (Proxied, orange cloud) |
+| **Nginx Config Path** | `/etc/nginx/conf.d/temcosrs.temcobank.com.conf` |
+| **SSL Cert Path** | `/etc/letsencrypt/live/temcosrs.temcobank.com/` |
+| **SSL Expiry** | May 13, 2026 (auto-renews) |
 
 ---
 
@@ -32,6 +37,7 @@
 | Web Server | Nginx Alpine (Docker) |
 | Container | Docker + Docker Compose |
 | SSL Termination | Nginx (host-level) + Let's Encrypt |
+| CDN / Proxy | Cloudflare (Proxied mode, Full SSL) |
 | Content | Static HTML, CSS, JavaScript, SVG |
 | Version Control | Git / GitHub |
 
@@ -77,12 +83,14 @@
 
 ## 5. Pre-Deployment Checklist
 
-- [ ] DNS A record created: `temcosrs.temcobank.com → 109.123.227.166`
-- [ ] SSH access verified: `ssh temco-prod`
-- [ ] Docker & Docker Compose installed on server
-- [ ] Port 8093 is free (not used by other services)
-- [ ] Nginx installed on host
-- [ ] Certbot installed for SSL
+- [x] DNS A record created: `temcosrs.temcobank.com → 109.123.227.166` (Cloudflare, Proxied)
+- [x] SSH access verified: `ssh temco-prod`
+- [x] Docker & Docker Compose installed on server
+- [x] Port 8093 is free (not used by other services)
+- [x] Nginx installed on host
+- [x] Certbot installed for SSL
+- [x] SSL certificate obtained via Certbot
+- [x] Cloudflare SSL mode set to Full (origin must have SSL)
 
 ---
 
@@ -147,40 +155,66 @@ curl -I http://127.0.0.1:8093
 # Should return: HTTP/1.1 200 OK
 ```
 
-### Step 5: Configure Host-Level Nginx
+### Step 5: Obtain SSL Certificate
+
+> **IMPORTANT:** Cloudflare connects to origin on port 443 (Full SSL mode).
+> The Nginx config MUST have a `listen 443 ssl` block or the site will return blank/404.
 
 ```bash
-# Copy the provided config
-cp /apps/temco-srs/temcosrs-nginx-host.conf /etc/nginx/sites-available/temcosrs.temcobank.com
+certbot certonly --nginx -d temcosrs.temcobank.com
+```
 
-# Enable the site
-ln -s /etc/nginx/sites-available/temcosrs.temcobank.com /etc/nginx/sites-enabled/
+### Step 6: Configure Host-Level Nginx
 
-# Test Nginx config
+> **NOTE:** On this server, active configs go in `/etc/nginx/conf.d/` (not `sites-available`).
+> All other TEMCO sites follow this pattern.
+
+Copy an existing config and adapt it (avoids PowerShell/shell variable escaping issues):
+
+```bash
+cp /etc/nginx/conf.d/finance.temcobank.com.conf /etc/nginx/conf.d/temcosrs.temcobank.com.conf
+
+# Replace domain and port
+sed -i 's/finance.temcobank.com/temcosrs.temcobank.com/g; s|http://127.0.0.1:8091|http://127.0.0.1:8093|g' /etc/nginx/conf.d/temcosrs.temcobank.com.conf
+
+# Remove API proxy blocks (not needed for static site)
+sed -i '/location \/temco-bank-system-project/,/}/d; /location \/api/,/}/d' /etc/nginx/conf.d/temcosrs.temcobank.com.conf
+```
+
+The final config should look like:
+
+```nginx
+# temcosrs.temcobank.com - SRS Website (Static, No SSO)
+server {
+    listen 80;
+    server_name temcosrs.temcobank.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name temcosrs.temcobank.com;
+
+    ssl_certificate /etc/letsencrypt/live/temcosrs.temcobank.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/temcosrs.temcobank.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:8093;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+    }
+}
+```
+
+Test and reload:
+
+```bash
 nginx -t
-```
-
-If `nginx -t` shows errors about SSL certificates (expected on first run), temporarily comment out the HTTPS server block and the HTTP→HTTPS redirect, then:
-
-```bash
-nginx -s reload
-```
-
-### Step 6: Obtain SSL Certificate
-
-```bash
-certbot --nginx -d temcosrs.temcobank.com
-```
-
-Certbot will:
-1. Verify domain ownership
-2. Generate SSL certificate
-3. Auto-configure the Nginx server block
-4. Set up auto-renewal
-
-After Certbot completes:
-
-```bash
 nginx -s reload
 ```
 
@@ -357,7 +391,35 @@ nslookup temcosrs.temcobank.com
 
 ---
 
-## 11. Isolation & Security Notes
+## 11. Cloudflare Notes
+
+### SSL Mode
+Cloudflare is set to **Full SSL** for `temcobank.com`. This means:
+- Cloudflare connects to origin on **port 443**
+- Origin **must** have a valid SSL certificate (Let's Encrypt)
+- Nginx **must** have a `listen 443 ssl` server block
+- Without this, Cloudflare returns 404 or blank page
+
+### Cache Purging
+If you update the site and see stale content:
+1. Go to **Cloudflare Dashboard** → `temcobank.com` → **Caching** → **Configuration**
+2. Click **Purge Everything**
+3. Or use Custom Purge: `https://temcosrs.temcobank.com/*`
+
+Alternatively, users can hard-refresh with **Ctrl + Shift + R**.
+
+### DNS Record
+```
+Type: A
+Name: temcosrs
+Content: 109.123.227.166
+Proxy status: Proxied (orange cloud)
+TTL: Auto
+```
+
+---
+
+## 12. Isolation & Security Notes
 
 | Concern | Mitigation |
 |---------|-----------|
@@ -370,7 +432,7 @@ nslookup temcosrs.temcobank.com
 
 ---
 
-## 12. Key Contacts & Access
+## 13. Key Contacts & Access
 
 | Resource | Detail |
 |----------|--------|
@@ -383,7 +445,18 @@ nslookup temcosrs.temcobank.com
 
 ---
 
-## 13. Quick Reference Card
+## 14. Lessons Learned (Feb 13, 2026 Deployment)
+
+| Issue | Root Cause | Fix |
+|-------|-----------|-----|
+| Blank page after deployment | Nginx config only had port 80 listener. Cloudflare connects on 443 (Full SSL). | Added `listen 443 ssl` block + Let's Encrypt cert. |
+| CSS/JS returning 404 | Cloudflare cached the 404 from before SSL was configured. | Purged Cloudflare cache. |
+| PowerShell mangling Nginx variables | `$host`, `$remote_addr` etc. interpreted as PS variables when using heredoc over SSH. | Copy existing config + `sed` to replace values instead. |
+| Config in wrong directory | Initially placed in `/etc/nginx/sites-available/`. Server loads from `/etc/nginx/conf.d/`. | Moved config to `/etc/nginx/conf.d/temcosrs.temcobank.com.conf`. |
+
+---
+
+## 15. Quick Reference Card
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -396,12 +469,9 @@ nslookup temcosrs.temcobank.com
 │    git clone https://github.com/ishanthasiribaddana/        │
 │      temco-srs.git .                                        │
 │    docker-compose up -d --build                             │
-│    cp temcosrs-nginx-host.conf                              │
-│      /etc/nginx/sites-available/temcosrs.temcobank.com      │
-│    ln -s /etc/nginx/sites-available/                        │
-│      temcosrs.temcobank.com /etc/nginx/sites-enabled/       │
-│    certbot --nginx -d temcosrs.temcobank.com                │
-│    nginx -s reload                                          │
+│    certbot certonly --nginx -d temcosrs.temcobank.com        │
+│    cp finance config → temcosrs + sed replace (see Step 6)  │
+│    nginx -t && nginx -s reload                              │
 │                                                             │
 │  UPDATE:                                                    │
 │    ssh temco-prod "cd /apps/temco-srs &&                    │
